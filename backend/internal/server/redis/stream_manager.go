@@ -16,7 +16,6 @@ import (
 )
 
 // StreamManager 管理 HTTP SSE stream 到 Redis
-// 只在有訂閱者時啟動 HTTP 連線
 type StreamManager struct {
 	ctx      context.Context
 	cancel   context.CancelFunc
@@ -179,7 +178,6 @@ func (sm *StreamManager) connectAndStream() error {
 
 		line := strings.TrimSpace(scanner.Text())
 		if line == "" {
-			// 空行代表 SSE 完整事件
 			if currentData.Len() > 0 {
 				sm.writeToRedisStream(currentEvent, currentData.String())
 			}
@@ -201,20 +199,30 @@ func (sm *StreamManager) connectAndStream() error {
 	return scanner.Err()
 }
 
-// writeToRedisStream 寫入 Redis Stream (保持 JSON 原始結構)
 func (sm *StreamManager) writeToRedisStream(event, data string) {
-	var raw json.RawMessage
-	if err := json.Unmarshal([]byte(data), &raw); err != nil {
+	var parsed interface{}
+	if err := json.Unmarshal([]byte(data), &parsed); err != nil {
 		sm.logger.Warn("Failed to parse JSON, storing as string", zap.Error(err))
-		raw = json.RawMessage([]byte(fmt.Sprintf(`"%s"`, data)))
+		parsed = data
 	}
 
-	payload := map[string]interface{}{
+	// Marshal back to JSON string
+	jsonBytes, err := json.Marshal(parsed)
+	if err != nil {
+		sm.logger.Error("Failed to marshal payload JSON", zap.Error(err))
+		return
+	}
+
+	payload := map[string]string{
 		"event":     event,
-		"data":      raw,
-		"timestamp": time.Now().UnixMilli(),
+		"data":      string(jsonBytes),
+		"timestamp": fmt.Sprint(time.Now().UnixMilli()),
 	}
 
+	sm.pushToRedis(payload)
+}
+
+func (sm *StreamManager) pushToRedis(payload map[string]string) {
 	maxRetries := 3
 	for i := 0; i < maxRetries; i++ {
 		err := sm.rdb.XAdd(sm.ctx, &redis.XAddArgs{
@@ -231,6 +239,5 @@ func (sm *StreamManager) writeToRedisStream(event, data string) {
 			zap.Int("attempt", i+1))
 		time.Sleep(time.Duration(i+1) * time.Second)
 	}
-
-	sm.logger.Error("Redis write failed after retries", zap.String("event", event))
+	sm.logger.Error("Redis write failed after retries", zap.Any("payload", payload))
 }

@@ -1,6 +1,7 @@
 package redis
 
 import (
+	"fmt"
 	"context"
 	"net/http"
 	"sync"
@@ -121,6 +122,7 @@ func (h *WebSocketHandler) streamToWebSocket(ctx context.Context, conn *websocke
 				payload := map[string]string{
 					"event": eventStr,
 					"data":  dataStr,
+					"timestamp": fmt.Sprint(time.Now().UnixMilli()),
 				}
 
 				conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
