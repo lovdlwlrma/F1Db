@@ -1,0 +1,9 @@
+#backend
+
+#frontend
+frontend/node_modules/
+
+#global
+.DS_Store
+note/
+.vscode/
