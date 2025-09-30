@@ -31,13 +31,13 @@ build:
 
 compose-up:
 	@echo "$(BLUE)Starting all containers...$(NC)"
-	docker-compose up -d
+	cd backend && docker-compose up -d
 	@echo "$(BLUE)Waiting for services to be ready...$(NC)"
 	@sleep 10
 
 compose-down:
 	@echo "$(BLUE)Stopping and removing all containers, volumes, and images...$(NC)"
-	docker-compose down --volumes --remove-orphans --rmi all
+	cd backend && docker-compose down --volumes --remove-orphans --rmi all
 	@echo "$(GREEN)All Docker resources cleaned up$(NC)"
 
 help:
