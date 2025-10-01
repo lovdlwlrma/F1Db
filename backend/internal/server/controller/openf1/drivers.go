@@ -41,5 +41,23 @@ func RegisterOpenF1DriverRoutes(rg *gin.RouterGroup, logger *zap.Logger) {
 			}
 			c.Data(http.StatusOK, "application/json", data)
 		})
+
+		group.GET("/drivers/number/:driver_number", func(c *gin.Context) {
+			datasource := datasource.NewOpenF1Datasource(logger)
+			defer datasource.Close()
+
+			driver_number, err := strconv.Atoi(c.Param("driver_number"))
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": "invalid driver_number"})
+				return
+			}
+
+			data, err := datasource.GetDriverInfo(c.Request.Context(), driver_number)
+			if err != nil {
+				c.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
+				return
+			}
+			c.Data(http.StatusOK, "application/json", data)
+		})
 	}
 }

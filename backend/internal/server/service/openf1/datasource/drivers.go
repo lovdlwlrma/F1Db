@@ -34,3 +34,16 @@ func (o *OpenF1Datasource) GetSessionsDrivers(ctx context.Context, session_key i
 
 	return o.fetchJSON(ctx, req)
 }
+
+func (o *OpenF1Datasource) GetDriverInfo(ctx context.Context, driver_number int) ([]byte, error) {
+	req := &httpclient.FetchRequest{
+		URL:    fmt.Sprintf("https://api.openf1.org/v1/drivers?driver_number=%d", driver_number),
+		Method: "GET",
+		Headers: map[string]string{
+			"Accept": "application/json",
+		},
+		Timeout: 30,
+	}
+
+	return o.fetchJSON(ctx, req)
+}

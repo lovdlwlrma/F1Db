@@ -16,6 +16,9 @@ type StandingsService struct {
 	rateLimiter *time.Ticker
 	mu          sync.Mutex
 	logger      *zap.Logger
+
+	driverCache map[int]*Driver
+	cacheMu     sync.RWMutex
 }
 
 func NewStandingsService(base *BaseService, logger *zap.Logger) *StandingsService {
@@ -23,6 +26,7 @@ func NewStandingsService(base *BaseService, logger *zap.Logger) *StandingsServic
 		BaseService: base,
 		rateLimiter: time.NewTicker(350 * time.Millisecond), // 每秒最多 3 次
 		logger:      logger,
+		driverCache: make(map[int]*Driver),
 	}
 }
 
@@ -31,6 +35,11 @@ func NewStandingsService(base *BaseService, logger *zap.Logger) *StandingsServic
 // =======================
 func (s *StandingsService) GetStandingsHistory(ctx context.Context, year int) (*StandingsHistory, error) {
 	s.logger.Info("Fetching standings history", zap.Int("year", year))
+
+	// 預先載入 driver 資料
+	if err := s.preloadDrivers(ctx); err != nil {
+		s.logger.Warn("Failed to preload drivers", zap.Error(err))
+	}
 
 	sessions, resultsMap, err := s.getRaceSessionsAndResults(ctx, year)
 	if err != nil {
@@ -45,30 +54,38 @@ func (s *StandingsService) GetStandingsHistory(ctx context.Context, year int) (*
 	}
 	s.logger.Debug("Locations prepared", zap.Strings("locations", locations))
 
-	driverStandings := s.buildDriverPointsHistory(sessions, resultsMap)
+	driverStandings := s.buildDriverPointsHistory(ctx, sessions, resultsMap)
 
 	return &StandingsHistory{
-		Year:                 year,
-		TotalRounds:          len(sessions),
-		Locations:            locations,
-		DriverStandings:      driverStandings,
+		Year:            year,
+		TotalRounds:     len(sessions),
+		Locations:       locations,
+		DriverStandings: driverStandings,
 	}, nil
 }
 
 // =======================
 // 車手積分整理
 // =======================
-func (s *StandingsService) buildDriverPointsHistory(events []Session, resultsMap map[int][]SessionResult) []DriverPointHistory {
+func (s *StandingsService) buildDriverPointsHistory(ctx context.Context, events []Session, resultsMap map[int][]SessionResult) []DriverPointHistory {
 	driverPoints := make(map[int]*DriverPointHistory)
 
 	// 初始化車手
 	for _, results := range resultsMap {
 		for _, r := range results {
 			if _, ok := driverPoints[r.DriverNumber]; !ok {
+				// 從 cache / API 拿 driver info
+				info, err := s.getDriverInfo(ctx, r.DriverNumber)
+				if err != nil {
+					s.logger.Warn("Failed to fetch driver info", zap.Int("driver", r.DriverNumber), zap.Error(err))
+					continue
+				}
+
 				driverPoints[r.DriverNumber] = &DriverPointHistory{
 					DriverNumber:     r.DriverNumber,
-					FullName:         r.FullName,
-					TeamName:         r.TeamName,
+					FullName:         info.FullName,
+					TeamName:         info.Team,
+					NameAcronym:      info.NameAcronym,
 					RoundPoints:      make([]float64, 0, len(events)),
 					CumulativePoints: make([]float64, 0, len(events)),
 					Positions:        make([]int, 0, len(events)),
@@ -77,6 +94,7 @@ func (s *StandingsService) buildDriverPointsHistory(events []Session, resultsMap
 		}
 	}
 
+	// 填寫每一場比賽的積分/排名
 	for _, event := range events {
 		results := resultsMap[event.SessionKey]
 
@@ -86,7 +104,7 @@ func (s *StandingsService) buildDriverPointsHistory(events []Session, resultsMap
 			pointsMap[r.DriverNumber] = r.Points
 			// 處理 Position 為 null 的情況，填 0 表示未完賽
 			if r.DNF || r.DNS || r.DSQ || r.Position == 0 {
-				posMap[r.DriverNumber] = 0
+				posMap[r.DriverNumber] = -1 // -1 = dnf/dns/dsq
 			} else {
 				posMap[r.DriverNumber] = r.Position
 			}
@@ -119,6 +137,66 @@ func (s *StandingsService) buildDriverPointsHistory(events []Session, resultsMap
 	return result
 }
 
+// =======================
+// Driver Info 補齊機制
+// =======================
+func (s *StandingsService) preloadDrivers(ctx context.Context) error {
+	data, err := s.FetchJSON(ctx, func(ctx context.Context) ([]byte, error) {
+		return s.DS.GetLatestDrivers(ctx)
+	})
+	if err != nil {
+		return err
+	}
+
+	var drivers []Driver
+	if err := json.Unmarshal(data, &drivers); err != nil {
+		return err
+	}
+
+	s.cacheMu.Lock()
+	defer s.cacheMu.Unlock()
+	for _, d := range drivers {
+		copy := d
+		s.driverCache[d.DriverNumber] = &copy
+	}
+	s.logger.Info("Preloaded drivers", zap.Int("count", len(drivers)))
+	return nil
+}
+
+func (s *StandingsService) getDriverInfo(ctx context.Context, driverNumber int) (*Driver, error) {
+	// 先從 cache 讀
+	s.cacheMu.RLock()
+	if d, ok := s.driverCache[driverNumber]; ok && d.FullName != "" && d.Team != "" {
+		s.cacheMu.RUnlock()
+		return d, nil
+	}
+	s.cacheMu.RUnlock()
+
+	// 打 API
+	data, err := s.FetchJSON(ctx, func(ctx context.Context) ([]byte, error) {
+		return s.DS.GetDriverInfo(ctx, driverNumber)
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	var drivers []Driver
+	if err := json.Unmarshal(data, &drivers); err != nil {
+		return nil, err
+	}
+	if len(drivers) == 0 {
+		return nil, fmt.Errorf("driver %d not found", driverNumber)
+	}
+
+	d := drivers[0]
+
+	// 更新 cache
+	s.cacheMu.Lock()
+	s.driverCache[driverNumber] = &d
+	s.cacheMu.Unlock()
+
+	return &d, nil
+}
 
 // =======================
 // 取得指定年份的 Race/Sprint Session 與結果
