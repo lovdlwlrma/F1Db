@@ -35,6 +35,7 @@ func RegisterRoutes(rg *gin.RouterGroup, pg *postgres.PostgresDB, cas *cassandra
 	openf1controller.RegisterOpenF1StintsRoutes(rg, f1logger)
 	openf1controller.RegisterOpenF1ResultRoutes(rg, f1logger)
 	openf1controller.RegisterOpenF1RaceControlRoutes(rg, f1logger)
+	openf1controller.RegisterOpenF1StandingsRoutes(rg, f1logger)
 	
 	// Race endpoints
 	raceLogger := log.With(zap.String("service", "race"))

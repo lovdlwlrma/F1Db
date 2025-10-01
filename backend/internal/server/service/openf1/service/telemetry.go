@@ -10,6 +10,10 @@ import (
 	"lovdlwlrma/backend/internal/server/service/openf1/datasource"
 )
 
+type TelemetryService struct {
+	*BaseService
+}
+
 func NewTelemetryService(base *BaseService) *TelemetryService {
 	return &TelemetryService{BaseService: base}
 }
