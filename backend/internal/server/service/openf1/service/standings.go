@@ -84,8 +84,11 @@ func (s *StandingsService) buildDriverPointsHistory(ctx context.Context, events 
 				driverPoints[r.DriverNumber] = &DriverPointHistory{
 					DriverNumber:     r.DriverNumber,
 					FullName:         info.FullName,
-					TeamName:         info.Team,
 					NameAcronym:      info.NameAcronym,
+					HeadShotURL:      info.HeadShotURL,
+					Color:            info.Color,
+					TeamName:         info.Team,
+
 					RoundPoints:      make([]float64, 0, len(events)),
 					CumulativePoints: make([]float64, 0, len(events)),
 					Positions:        make([]int, 0, len(events)),
