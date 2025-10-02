@@ -82,12 +82,12 @@ func (s *StandingsService) buildDriverPointsHistory(ctx context.Context, events 
 				}
 
 				driverPoints[r.DriverNumber] = &DriverPointHistory{
-					DriverNumber:     r.DriverNumber,
-					FullName:         info.FullName,
-					NameAcronym:      info.NameAcronym,
-					HeadShotURL:      info.HeadShotURL,
-					Color:            info.Color,
-					TeamName:         info.Team,
+					DriverNumber: r.DriverNumber,
+					FullName:     info.FullName,
+					NameAcronym:  info.NameAcronym,
+					HeadShotURL:  info.HeadShotURL,
+					Color:        info.Color,
+					TeamName:     info.Team,
 
 					RoundPoints:      make([]float64, 0, len(events)),
 					CumulativePoints: make([]float64, 0, len(events)),
@@ -191,7 +191,7 @@ func (s *StandingsService) getDriverInfo(ctx context.Context, driverNumber int) 
 		return nil, fmt.Errorf("driver %d not found", driverNumber)
 	}
 
-	d := drivers[0]
+	d := drivers[len(drivers)-1]
 
 	// 更新 cache
 	s.cacheMu.Lock()
