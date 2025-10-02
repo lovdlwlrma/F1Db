@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import Overview from "./Overview";
 import Telemetry from "./Telemetry";
 import Analytics from "./Analytics";
+import Standings from "./Standings";
 
 const DashboardPage = () => {
   const [open, setOpen] = useState(true);
@@ -81,6 +82,8 @@ const DashboardPage = () => {
               <Telemetry />
             ) : activePage === "Analytics" ? (
               <Analytics />
+            ) : activePage === "Standings" ? (
+              <Standings />
             ) : (
               <div>
                 <h1 className="text-2xl font-bold mb-4">當前頁面: {activePage}</h1>
