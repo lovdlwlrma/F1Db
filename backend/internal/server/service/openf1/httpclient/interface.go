@@ -26,10 +26,10 @@ type FetchResponse struct {
 type HTTPClient interface {
 	// Fetch executes HTTP request and returns raw response
 	Fetch(ctx context.Context, req *FetchRequest) (*FetchResponse, error)
-	
+
 	// FetchJSON executes HTTP request and returns JSON format response
 	FetchJSON(ctx context.Context, req *FetchRequest) (*FetchResponse, error)
-	
+
 	// Close closes the HTTP Client and releases resources
 	Close() error
 }

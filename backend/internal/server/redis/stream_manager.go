@@ -190,7 +190,7 @@ func (sm *StreamManager) connectAndStream() error {
 // parseSSEStream 解析 SSE 格式的資料流
 func (sm *StreamManager) parseSSEStream(resp *http.Response) error {
 	scanner := bufio.NewScanner(resp.Body)
-	
+
 	// 設置較大的緩衝區以處理大型訊息
 	buf := make([]byte, 256*1024)
 	scanner.Buffer(buf, len(buf))

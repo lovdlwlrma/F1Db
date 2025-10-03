@@ -7,8 +7,6 @@ import (
 	"lovdlwlrma/backend/internal/server/service/openf1/httpclient"
 )
 
-
-
 func (o *OpenF1Datasource) GetLatestDrivers(ctx context.Context) ([]byte, error) {
 	req := &httpclient.FetchRequest{
 		URL:    "https://api.openf1.org/v1/drivers?session_key=latest",

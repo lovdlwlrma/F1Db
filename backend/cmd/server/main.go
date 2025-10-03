@@ -39,22 +39,22 @@ func main() {
 	if dbHost == "" {
 		dbHost = "localhost"
 	}
-	
+
 	dbUser := os.Getenv("DB_USER")
 	if dbUser == "" {
 		dbUser = "admin"
 	}
-	
+
 	dbPassword := os.Getenv("DB_PASSWORD")
 	if dbPassword == "" {
 		dbPassword = "password123"
 	}
-	
+
 	dbName := os.Getenv("DB_NAME")
 	if dbName == "" {
 		dbName = "appdb"
 	}
-	
+
 	dbPort := 5432
 	if portStr := os.Getenv("DB_PORT"); portStr != "" {
 		// 可以加上轉換邏輯，這裡簡化處理
@@ -85,7 +85,7 @@ func main() {
 	if cassandraHosts == "" {
 		cassandraHosts = "localhost:9042"
 	}
-	
+
 	cassandraKeyspace := os.Getenv("CASSANDRA_KEYSPACE")
 	if cassandraKeyspace == "" {
 		cassandraKeyspace = "app_logs"
@@ -144,7 +144,7 @@ func main() {
 	wsMux := http.NewServeMux()
 	wsMux.HandleFunc("/ws/live", wsHandler.HandleConnection)
 	wsMux.HandleFunc("/ws/status", wsHandler.ServeLiveStatus)
-	
+
 	// 健康檢查端點
 	wsMux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
@@ -155,7 +155,7 @@ func main() {
 	// 啟動主 HTTP Server (API)
 	// -----------------------------
 	srv := server.NewServer(pg, cas)
-	
+
 	go func() {
 		logger.Info("Main API server starting", zap.Int("port", 8080))
 		if err := srv.Start(8080); err != nil {

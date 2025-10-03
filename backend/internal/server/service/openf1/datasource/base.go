@@ -11,7 +11,7 @@ import (
 // OpenF1Datasource coordinates OpenF1 data fetching.
 type OpenF1Datasource struct {
 	httpClient httpclient.HTTPClient
-	logger      *zap.Logger
+	logger     *zap.Logger
 }
 
 // NewOpenF1Datasource creates a new datasource with a default HTTP client.
@@ -23,7 +23,7 @@ func NewOpenF1Datasource(logger *zap.Logger) *OpenF1Datasource {
 	httpClient := httpclient.NewDefaultHTTPClient(logger)
 	return &OpenF1Datasource{
 		httpClient: httpClient,
-		logger:      logger,
+		logger:     logger,
 	}
 }
 

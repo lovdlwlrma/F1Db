@@ -1,10 +1,10 @@
 package controller
 
 import (
+	"lovdlwlrma/backend/internal/server/service/openf1/datasource"
 	"net/http"
 	"strconv"
-	"lovdlwlrma/backend/internal/server/service/openf1/datasource"
-	
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -24,7 +24,7 @@ func RegisterOpenF1MeetingRoutes(rg *gin.RouterGroup, logger *zap.Logger) {
 			}
 			c.Data(http.StatusOK, "application/json", data)
 		})
-		
+
 		group.GET("/meetings/year/:year", func(c *gin.Context) {
 			datasource := datasource.NewOpenF1Datasource(logger)
 			defer datasource.Close()

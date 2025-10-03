@@ -101,21 +101,21 @@ type LapData struct {
 // ===== 積分榜相關資料結構 =====
 // StandingsHistory 包含車手和車隊的完整積分歷史
 type StandingsHistory struct {
-    Year              int                       `json:"year"`
-    TotalRounds       int                       `json:"total_rounds"`
-    Locations         []string                  `json:"locations"`          // 所有站點名稱 (共用)
-    DriverStandings   []DriverPointHistory      `json:"driver_standings"`   // 車手積分榜
+	Year            int                  `json:"year"`
+	TotalRounds     int                  `json:"total_rounds"`
+	Locations       []string             `json:"locations"`        // 所有站點名稱 (共用)
+	DriverStandings []DriverPointHistory `json:"driver_standings"` // 車手積分榜
 }
 
 // DriverPointHistory 車手積分歷史 (簡化版)
 type DriverPointHistory struct {
-    DriverNumber     int       `json:"driver_number"`
-    FullName         string    `json:"full_name"`
+	DriverNumber     int       `json:"driver_number"`
+	FullName         string    `json:"full_name"`
 	NameAcronym      string    `json:"name_acronym"`
-    TeamName         string    `json:"team_name"`
+	TeamName         string    `json:"team_name"`
 	Color            string    `json:"team_colour"`
 	HeadShotURL      string    `json:"headshot_url"`
-    RoundPoints      []float64 `json:"round_points"`      // 每站獲得的積分
-    CumulativePoints []float64 `json:"cumulative_points"` // 每站後的累積積分
-    Positions        []int     `json:"positions"`         // 每站後的排名
+	RoundPoints      []float64 `json:"round_points"`      // 每站獲得的積分
+	CumulativePoints []float64 `json:"cumulative_points"` // 每站後的累積積分
+	Positions        []int     `json:"positions"`         // 每站後的排名
 }

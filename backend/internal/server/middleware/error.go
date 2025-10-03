@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"net/http"
 	"lovdlwlrma/backend/internal/log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -25,7 +25,7 @@ func ErrorHandler() gin.HandlerFunc {
 			switch err.Type {
 			case gin.ErrorTypeBind:
 				c.JSON(http.StatusBadRequest, gin.H{
-					"error": "Invalid request parameters",
+					"error":   "Invalid request parameters",
 					"details": err.Err.Error(),
 				})
 			case gin.ErrorTypePrivate:
@@ -34,7 +34,7 @@ func ErrorHandler() gin.HandlerFunc {
 				})
 			default:
 				c.JSON(http.StatusInternalServerError, gin.H{
-					"error": "Unknown error",
+					"error":   "Unknown error",
 					"details": err.Err.Error(),
 				})
 			}
