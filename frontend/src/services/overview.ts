@@ -1,6 +1,6 @@
-import { NextRaceApiResponse} from '@/types/race';
+import { NextRaceApiResponse } from "@/types/race";
 
-const API_BASE_URL = 'http://localhost:8080/api/v1';
+const API_BASE_URL = "http://localhost:8080/api/v1";
 
 export class OverviewService {
   private static async fetchData<T>(url: string): Promise<T> {
@@ -11,7 +11,7 @@ export class OverviewService {
       }
       return await response.json();
     } catch (error) {
-      console.error('API request failed:', error);
+      console.error("API request failed:", error);
       throw error;
     }
   }

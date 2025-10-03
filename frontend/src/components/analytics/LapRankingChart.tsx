@@ -12,7 +12,15 @@ import {
   Legend,
 } from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 interface Props {
   data?: LapRanking[] | null;
@@ -58,7 +66,7 @@ export default function LapRankingChart({
       // 如果有 result 資料且與最後一圈不同，則替換最後一個值
       if (res && values.length > 0) {
         values[values.length - 1] = res.position ?? values[values.length - 1];
-      }      
+      }
 
       // DNF flags (用於畫虛線) - 檢查每一圈是否DNF
       const dnfFlags = data.map((lap) => {
@@ -66,7 +74,7 @@ export default function LapRankingChart({
         const idx = lap.rank.indexOf(drv);
         return idx >= 0 ? lap.dnf[idx] : false;
       });
-      
+
       // 如果車手最終DNF，將最後一格也標記為DNF
       if (isDNF && dnfFlags.length > 0) {
         dnfFlags[dnfFlags.length - 1] = true;
@@ -88,7 +96,10 @@ export default function LapRankingChart({
           borderDash: (ctx: any) => {
             const i = ctx.p0DataIndex;
             // 如果當前點或下一個點是 DNF，就畫虛線
-            if (dnfFlags[i] || (dnfFlags[i + 1] !== undefined && dnfFlags[i + 1])) {
+            if (
+              dnfFlags[i] ||
+              (dnfFlags[i + 1] !== undefined && dnfFlags[i + 1])
+            ) {
               return [5, 5]; // 虛線樣式
             }
             return []; // 實線
@@ -151,24 +162,30 @@ export default function LapRankingChart({
     const labels: Record<number, { label: string; color: string }> = {};
 
     // 先處理所有完賽車手
-    result.filter(r => !r.dnf).forEach((r) => {
-      labels[r.position] = {
-        label:
-          driverMap[r.driver_number]?.name_acronym ?? `#${r.driver_number}`,
-        color: driverMap[r.driver_number]?.team_colour
-          ? `#${driverMap[r.driver_number].team_colour}`
-          : "#888",
-      };
-    });
+    result
+      .filter((r) => !r.dnf)
+      .forEach((r) => {
+        labels[r.position] = {
+          label:
+            driverMap[r.driver_number]?.name_acronym ?? `#${r.driver_number}`,
+          color: driverMap[r.driver_number]?.team_colour
+            ? `#${driverMap[r.driver_number].team_colour}`
+            : "#888",
+        };
+      });
 
     // 處理DNF車手，將他們放在較後的位置
-    const dnfDrivers = result.filter(r => r.dnf);
-    const maxFinishedPosition = Math.max(...result.filter(r => !r.dnf).map(r => r.position), 0);
-    
+    const dnfDrivers = result.filter((r) => r.dnf);
+    const maxFinishedPosition = Math.max(
+      ...result.filter((r) => !r.dnf).map((r) => r.position),
+      0,
+    );
+
     dnfDrivers.forEach((r, index) => {
       const dnfPosition = maxFinishedPosition + index + 1;
       labels[dnfPosition] = {
-        label: driverMap[r.driver_number]?.name_acronym ?? `#${r.driver_number}`,
+        label:
+          driverMap[r.driver_number]?.name_acronym ?? `#${r.driver_number}`,
         color: driverMap[r.driver_number]?.team_colour
           ? `#${driverMap[r.driver_number].team_colour}`
           : "#888",

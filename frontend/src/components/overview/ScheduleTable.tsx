@@ -1,5 +1,5 @@
-import React from 'react';
-import { Race } from '@/types/race';
+import React from "react";
+import { Race } from "@/types/race";
 
 interface ScheduleTableProps {
   nextRace: Race | null;
@@ -8,14 +8,14 @@ interface ScheduleTableProps {
 
 const ScheduleTable: React.FC<ScheduleTableProps> = ({ nextRace, loading }) => {
   const formatDateTime = (dateTimeString?: string) => {
-    if (!dateTimeString) return 'TBD';
+    if (!dateTimeString) return "TBD";
     const date = new Date(dateTimeString);
-    return date.toLocaleString('en-US', {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    return date.toLocaleString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
       hour12: false,
     });
   };
@@ -66,22 +66,22 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ nextRace, loading }) => {
           <div
             key={session.key}
             className={`flex justify-between items-center p-3 rounded-lg transition transform hover:scale-[1.02] hover:shadow-md ${
-              session.type === 'Race'
-                ? 'bg-gradient-to-r from-red-600/30 to-red-500/20 border border-red-500/40'
-                : 'bg-gray-800/40 border border-gray-700/40'
+              session.type === "Race"
+                ? "bg-gradient-to-r from-red-600/30 to-red-500/20 border border-red-500/40"
+                : "bg-gray-800/40 border border-gray-700/40"
             }`}
           >
             <div className="flex items-center space-x-3 flex-1 min-w-0">
               <div
                 className={`w-3 h-3 rounded-full ${
-                  session.type === 'Race'
-                    ? 'bg-red-500 animate-pulse'
-                    : 'bg-gray-500'
+                  session.type === "Race"
+                    ? "bg-red-500 animate-pulse"
+                    : "bg-gray-500"
                 }`}
               />
               <span
                 className={`font-semibold tracking-wide text-ellipsis overflow-hidden whitespace-nowrap ${
-                  session.type === 'Race' ? 'text-red-300' : 'text-gray-200'
+                  session.type === "Race" ? "text-red-300" : "text-gray-200"
                 }`}
               >
                 {session.label}
@@ -89,7 +89,7 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ nextRace, loading }) => {
             </div>
             <span
               className={`text-sm font-mono ml-4 flex-shrink-0 text-right ${
-                session.type === 'Race' ? 'text-red-200' : 'text-gray-400'
+                session.type === "Race" ? "text-red-200" : "text-gray-400"
               }`}
             >
               {formatDateTime(session.startDate)}

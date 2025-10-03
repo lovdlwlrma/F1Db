@@ -1,8 +1,8 @@
-import './styles/App.css';
-import { Routes, Route } from 'react-router-dom';
-import Home from '@/pages/Home';
-import Register from '@/pages/Register';
-import Main from '@/pages/Main';
+import "./styles/App.css";
+import { Routes, Route } from "react-router-dom";
+import Home from "@/pages/Home";
+import Register from "@/pages/Register";
+import Main from "@/pages/Main";
 
 function App() {
   return (

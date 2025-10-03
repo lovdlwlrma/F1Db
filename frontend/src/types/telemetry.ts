@@ -61,4 +61,3 @@ export interface TelemetryData {
   brake: number;
   drs: number;
 }
-  

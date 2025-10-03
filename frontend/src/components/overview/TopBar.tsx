@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Race } from '@/types/race';
+import React, { useEffect, useState } from "react";
+import { Race } from "@/types/race";
 
 interface TopBarProps {
   nextRace: Race | null;
@@ -45,7 +45,9 @@ const TopBar: React.FC<TopBarProps> = ({ nextRace, loading }) => {
   if (!nextRace) {
     return (
       <div className="bg-gradient-to-r from-gray-800/90 to-gray-900/90 backdrop-blur-sm border border-gray-700/50 p-6 rounded-lg mb-4 -mt-2">
-        <h2 className="text-2xl font-bold text-white mb-2">No Upcoming Races</h2>
+        <h2 className="text-2xl font-bold text-white mb-2">
+          No Upcoming Races
+        </h2>
         <p className="text-gray-300">No upcoming F1 races found.</p>
       </div>
     );
@@ -54,7 +56,7 @@ const TopBar: React.FC<TopBarProps> = ({ nextRace, loading }) => {
   const raceTitle = nextRace.title;
   const raceName = nextRace.name;
   const country = nextRace.city;
-  const circuitName = nextRace.circuit?.name ?? '';
+  const circuitName = nextRace.circuit?.name ?? "";
   const countryFlag = nextRace.country_flag_image_url;
 
   return (
@@ -73,7 +75,7 @@ const TopBar: React.FC<TopBarProps> = ({ nextRace, loading }) => {
               className="text-2xl font-bold text-white mb-1"
               style={{
                 fontFamily: "'Orbitron', sans-serif",
-                textShadow: '0 0 6px #ff0000, 0 0 10px #ff0000',
+                textShadow: "0 0 6px #ff0000, 0 0 10px #ff0000",
               }}
             >
               {raceTitle}
@@ -90,13 +92,13 @@ const TopBar: React.FC<TopBarProps> = ({ nextRace, loading }) => {
           <div className="text-right flex flex-col items-center bg-gray-800/60 backdrop-blur-sm px-6 py-2 rounded-lg border border-white/20 shadow-inner">
             <div
               className="text-xl font-bold text-white mb-1 text-center"
-              style={{ textShadow: '0 0 6px #00ffff, 0 0 10px #00ffff' }}
+              style={{ textShadow: "0 0 6px #00ffff, 0 0 10px #00ffff" }}
             >
               {daysLeft} {daysLeft === 1 ? "day" : "days"}
             </div>
             <div
               className="text-gray-300 text-sm uppercase tracking-wider text-center"
-              style={{ textShadow: '0 0 3px #00ffff' }}
+              style={{ textShadow: "0 0 3px #00ffff" }}
             >
               until race
             </div>

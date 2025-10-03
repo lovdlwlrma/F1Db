@@ -1,7 +1,7 @@
-import Background from '@/components/Background';
-import AuthLayout from '@/layouts/AuthLayout';
-import AuthCard from '@/components/AuthCard';
-import logo from '@/assets/logo.png';
+import Background from "@/components/Background";
+import AuthLayout from "@/layouts/AuthLayout";
+import AuthCard from "@/components/AuthCard";
+import logo from "@/assets/logo.png";
 
 const Home = () => {
   return (

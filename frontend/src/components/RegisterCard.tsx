@@ -17,8 +17,9 @@ const RegisterCard: React.FC = () => {
       <div className="absolute inset-0 rounded-2xl border-4 border-transparent animate-border-glow pointer-events-none"></div>
 
       <CardHeader className="pt-8">
-        <CardTitle className="text-3xl font-extrabold text-center text-white tracking-widest"
-        style={{ fontFamily: "'Orbitron', sans-serif" }}
+        <CardTitle
+          className="text-3xl font-extrabold text-center text-white tracking-widest"
+          style={{ fontFamily: "'Orbitron', sans-serif" }}
         >
           F1 Register
         </CardTitle>
@@ -39,7 +40,9 @@ const RegisterCard: React.FC = () => {
           </div>
 
           <div>
-            <Label htmlFor="name" className="text-gray-300">Full Name</Label>
+            <Label htmlFor="name" className="text-gray-300">
+              Full Name
+            </Label>
             <Input
               id="name"
               type="text"
@@ -49,7 +52,9 @@ const RegisterCard: React.FC = () => {
           </div>
 
           <div>
-            <Label htmlFor="email" className="text-gray-300">Email</Label>
+            <Label htmlFor="email" className="text-gray-300">
+              Email
+            </Label>
             <Input
               id="email"
               type="email"
@@ -59,7 +64,9 @@ const RegisterCard: React.FC = () => {
           </div>
 
           <div>
-            <Label htmlFor="password" className="text-gray-300">Password</Label>
+            <Label htmlFor="password" className="text-gray-300">
+              Password
+            </Label>
             <Input
               id="password"
               type="password"
@@ -69,7 +76,9 @@ const RegisterCard: React.FC = () => {
           </div>
 
           <div>
-            <Label htmlFor="confirmPassword" className="text-gray-300">Confirm Password</Label>
+            <Label htmlFor="confirmPassword" className="text-gray-300">
+              Confirm Password
+            </Label>
             <Input
               id="confirmPassword"
               type="password"

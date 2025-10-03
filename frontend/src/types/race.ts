@@ -15,8 +15,8 @@ export interface Weather {
 }
 
 export interface Session {
-  type: string;              // e.g. "Practice", "Qualifying", "Race"
-  name: string;              // e.g. "Practice 1"
+  type: string; // e.g. "Practice", "Qualifying", "Race"
+  name: string; // e.g. "Practice 1"
   start_date: string;
   end_date: string;
   gmt_offset: string;
@@ -49,7 +49,7 @@ export interface Race {
   title: string;
   year: number;
   round: number;
-  name: string;                      // e.g. "Azerbaijan Grand Prix"
+  name: string; // e.g. "Azerbaijan Grand Prix"
   country: string;
   city: string;
   country_flag_image_url: string;

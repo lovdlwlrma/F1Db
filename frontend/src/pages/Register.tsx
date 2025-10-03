@@ -1,7 +1,7 @@
-import Background from '@/components/Background';
-import RegisterCard from '@/components/RegisterCard';
-import logo from '@/assets/logo.png';
-import RegisterLayout from '@/layouts/RegisterLayout';
+import Background from "@/components/Background";
+import RegisterCard from "@/components/RegisterCard";
+import logo from "@/assets/logo.png";
+import RegisterLayout from "@/layouts/RegisterLayout";
 
 const Register = () => {
   return (

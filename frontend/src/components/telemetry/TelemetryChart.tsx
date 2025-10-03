@@ -12,7 +12,15 @@ import {
   Legend,
 } from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 interface Props {
   telemetry1: TelemetryData[];
@@ -23,10 +31,21 @@ interface Props {
   laps2?: LapData[];
 }
 
-const TelemetryChart: React.FC<Props> = ({ telemetry1, telemetry2, driver1, driver2, laps1, laps2 }) => {
+const TelemetryChart: React.FC<Props> = ({
+  telemetry1,
+  telemetry2,
+  driver1,
+  driver2,
+  laps1,
+  laps2,
+}) => {
   if (!telemetry1 || telemetry1.length === 0) return null;
 
-  const chartConfigs: { title: string; key?: keyof TelemetryData; isLapTime?: boolean }[] = [
+  const chartConfigs: {
+    title: string;
+    key?: keyof TelemetryData;
+    isLapTime?: boolean;
+  }[] = [
     { title: "Lap Time", isLapTime: true },
     { title: "Speed", key: "speed" },
     { title: "Throttle", key: "throttle" },
@@ -36,17 +55,28 @@ const TelemetryChart: React.FC<Props> = ({ telemetry1, telemetry2, driver1, driv
   ];
 
   const sampleStep = 5;
-  const sample = (data: TelemetryData[]) => data.filter((_, i) => i % sampleStep === 0);
+  const sample = (data: TelemetryData[]) =>
+    data.filter((_, i) => i % sampleStep === 0);
 
   const legendItems: { label: string; color: string }[] = [];
-  if (driver1) legendItems.push({ label: driver1.full_name, color: `#${driver1.team_colour}` });
-  if (driver2) legendItems.push({ label: driver2.full_name, color: `#${driver2.team_colour}` });
+  if (driver1)
+    legendItems.push({
+      label: driver1.full_name,
+      color: `#${driver1.team_colour}`,
+    });
+  if (driver2)
+    legendItems.push({
+      label: driver2.full_name,
+      color: `#${driver2.team_colour}`,
+    });
 
   // 控制 dataset 顯示/隱藏
-  const [hiddenLines, setHiddenLines] = useState<{ [label: string]: boolean }>({});
+  const [hiddenLines, setHiddenLines] = useState<{ [label: string]: boolean }>(
+    {},
+  );
 
   const toggleLine = (label: string) => {
-    setHiddenLines(prev => ({ ...prev, [label]: !prev[label] }));
+    setHiddenLines((prev) => ({ ...prev, [label]: !prev[label] }));
   };
 
   return (
@@ -54,7 +84,7 @@ const TelemetryChart: React.FC<Props> = ({ telemetry1, telemetry2, driver1, driv
       {/* 統一 Legend */}
       {legendItems.length > 0 && (
         <div className="col-span-2 flex justify-center space-x-4 mt-2">
-          {legendItems.map(item => (
+          {legendItems.map((item) => (
             <div
               key={item.label}
               className="flex items-center space-x-1 cursor-pointer"
@@ -63,7 +93,9 @@ const TelemetryChart: React.FC<Props> = ({ telemetry1, telemetry2, driver1, driv
               <span
                 className="w-4 h-4 rounded-sm"
                 style={{
-                  backgroundColor: hiddenLines[item.label] ? "#555" : item.color,
+                  backgroundColor: hiddenLines[item.label]
+                    ? "#555"
+                    : item.color,
                 }}
               ></span>
               <span className="text-white">{item.label}</span>
@@ -80,24 +112,26 @@ const TelemetryChart: React.FC<Props> = ({ telemetry1, telemetry2, driver1, driv
               <h3 className="text-white mb-2">{cfg.title}</h3>
               <Line
                 data={{
-                  labels: laps1.map(l => `Lap ${l.lap_number}`),
+                  labels: laps1.map((l) => `Lap ${l.lap_number}`),
                   datasets: [
                     driver1 && {
                       label: driver1.full_name,
-                      data: laps1.map(l => l.lap_duration),
+                      data: laps1.map((l) => l.lap_duration),
                       borderColor: `#${driver1.team_colour}`,
                       backgroundColor: `#${driver1.team_colour}55`,
                       tension: 0.2,
                       hidden: hiddenLines[driver1.full_name] ?? false,
                     },
-                    driver2 && laps2 && laps2.length > 0 && {
-                      label: driver2.full_name,
-                      data: laps2.map(l => l.lap_duration),
-                      borderColor: `#${driver2.team_colour}`,
-                      backgroundColor: `#${driver2.team_colour}55`,
-                      tension: 0.2,
-                      hidden: hiddenLines[driver2.full_name] ?? false,
-                    },
+                    driver2 &&
+                      laps2 &&
+                      laps2.length > 0 && {
+                        label: driver2.full_name,
+                        data: laps2.map((l) => l.lap_duration),
+                        borderColor: `#${driver2.team_colour}`,
+                        backgroundColor: `#${driver2.team_colour}55`,
+                        tension: 0.2,
+                        hidden: hiddenLines[driver2.full_name] ?? false,
+                      },
                   ].filter(Boolean) as any,
                 }}
                 options={{
@@ -114,7 +148,9 @@ const TelemetryChart: React.FC<Props> = ({ telemetry1, telemetry2, driver1, driv
         const sampled1 = sample(telemetry1);
         const sampled2 = telemetry2 ? sample(telemetry2) : [];
         const startTime1 = new Date(sampled1[0].date).getTime();
-        const labels = sampled1.map(d => ((new Date(d.date).getTime() - startTime1) / 1000).toFixed(2));
+        const labels = sampled1.map((d) =>
+          ((new Date(d.date).getTime() - startTime1) / 1000).toFixed(2),
+        );
 
         return (
           <div key={idx} className="col-span-1">
@@ -123,28 +159,34 @@ const TelemetryChart: React.FC<Props> = ({ telemetry1, telemetry2, driver1, driv
               data={{
                 labels,
                 datasets: [
-                  driver1 && cfg.key && {
-                    label: driver1.full_name,
-                    data: sampled1.map(d => Number(d[cfg.key!])),
-                    borderColor: `#${driver1.team_colour}`,
-                    backgroundColor: `#${driver1.team_colour}55`,
-                    tension: 0.2,
-                    hidden: hiddenLines[driver1.full_name] ?? false,
-                  },
-                  driver2 && telemetry2 && cfg.key && {
-                    label: driver2.full_name,
-                    data: sampled2.map(d => Number(d[cfg.key!])),
-                    borderColor: `#${driver2.team_colour}`,
-                    backgroundColor: `#${driver2.team_colour}55`,
-                    tension: 0.2,
-                    hidden: hiddenLines[driver2.full_name] ?? false,
-                  },
+                  driver1 &&
+                    cfg.key && {
+                      label: driver1.full_name,
+                      data: sampled1.map((d) => Number(d[cfg.key!])),
+                      borderColor: `#${driver1.team_colour}`,
+                      backgroundColor: `#${driver1.team_colour}55`,
+                      tension: 0.2,
+                      hidden: hiddenLines[driver1.full_name] ?? false,
+                    },
+                  driver2 &&
+                    telemetry2 &&
+                    cfg.key && {
+                      label: driver2.full_name,
+                      data: sampled2.map((d) => Number(d[cfg.key!])),
+                      borderColor: `#${driver2.team_colour}`,
+                      backgroundColor: `#${driver2.team_colour}55`,
+                      tension: 0.2,
+                      hidden: hiddenLines[driver2.full_name] ?? false,
+                    },
                 ].filter(Boolean) as any,
               }}
               options={{
                 responsive: true,
                 plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: false }, x: { ticks: { maxTicksLimit: 10 } } },
+                scales: {
+                  y: { beginAtZero: false },
+                  x: { ticks: { maxTicksLimit: 10 } },
+                },
               }}
             />
           </div>

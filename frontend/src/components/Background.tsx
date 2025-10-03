@@ -1,5 +1,5 @@
-import React from 'react';
-import heroSrc from '@/assets/hero1.jpg';
+import React from "react";
+import heroSrc from "@/assets/hero1.jpg";
 
 interface BackgroundProps {
   children?: React.ReactNode;

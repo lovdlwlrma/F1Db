@@ -1,5 +1,5 @@
-import React from 'react';
-import { Race } from '@/types/race';
+import React from "react";
+import { Race } from "@/types/race";
 
 interface CircuitMapProps {
   nextRace: Race | null;
@@ -31,7 +31,7 @@ const CircuitMap: React.FC<CircuitMapProps> = ({ nextRace, loading }) => {
   }
 
   const getCircuitImage = (grandPrixName: string) => {
-    const firstWord = grandPrixName.split(' ')[0];
+    const firstWord = grandPrixName.split(" ")[0];
     return `/src/assets/Circuit/${firstWord}.avif`;
   };
 

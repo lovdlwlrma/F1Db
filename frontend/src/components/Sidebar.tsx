@@ -1,7 +1,19 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LayoutDashboard, BarChart3, Settings, ChevronsRight, ChevronsLeft, Gauge, Calendar, Trophy, Users, Route, Activity } from "lucide-react";
+import {
+  LayoutDashboard,
+  BarChart3,
+  Settings,
+  ChevronsRight,
+  ChevronsLeft,
+  Gauge,
+  Calendar,
+  Trophy,
+  Users,
+  Route,
+  Activity,
+} from "lucide-react";
 
 interface SidebarProps {
   open: boolean;
@@ -10,7 +22,12 @@ interface SidebarProps {
   onPageChange?: (page: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ open, onToggle, activePage = "Overview", onPageChange }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  open,
+  onToggle,
+  activePage = "Overview",
+  onPageChange,
+}) => {
   const menuItems = [
     { icon: <LayoutDashboard size={28} />, label: "Overview" },
     { icon: <Gauge size={28} />, label: "Live Timing" },
@@ -27,7 +44,9 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onToggle, activePage = "Overvie
     <div className="relative flex flex-col h-full">
       <div className="flex flex-row items-center p-2 transition-all duration-300">
         {/* 左側內容包一層，展開時 w-auto，收攏時 w-0 overflow-hidden */}
-        <div className={`flex flex-col justify-center transition-all duration-500 ease-in-out ${open ? 'w-auto mr-2' : 'w-0 mr-0 overflow-hidden'}`}>
+        <div
+          className={`flex flex-col justify-center transition-all duration-500 ease-in-out ${open ? "w-auto mr-2" : "w-0 mr-0 overflow-hidden"}`}
+        >
           <div
             className={`
               text-base font-bold tracking-widest text-red-400 drop-shadow-[0_0_5px_rgba(255,0,0,0.7)]
@@ -54,22 +73,26 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onToggle, activePage = "Overvie
           onClick={onToggle}
         >
           <div className="relative w-7 h-7">
-            <ChevronsRight 
-              size={28} 
+            <ChevronsRight
+              size={28}
               className={`absolute inset-0 transition-all duration-300 ${
-                open ? "opacity-0 rotate-90 scale-75" : "opacity-100 rotate-0 scale-100"
+                open
+                  ? "opacity-0 rotate-90 scale-75"
+                  : "opacity-100 rotate-0 scale-100"
               }`}
             />
-            <ChevronsLeft 
-              size={28} 
+            <ChevronsLeft
+              size={28}
               className={`absolute inset-0 transition-all duration-300 ${
-                open ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-75"
+                open
+                  ? "opacity-100 rotate-0 scale-100"
+                  : "opacity-0 -rotate-90 scale-75"
               }`}
             />
           </div>
         </Button>
       </div>
-      <div 
+      <div
         className={`
           h-px bg-gradient-to-r from-red-500/60 via-red-400/80 to-red-500/60
           transition-all duration-300 ease-in-out mx-2
@@ -78,7 +101,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onToggle, activePage = "Overvie
       />
 
       <nav className="flex flex-col mt-4 space-y-6 flex-1">
-                        {menuItems.map((item, idx) => (
+        {menuItems.map((item, idx) => (
           <div
             key={idx}
             className={`relative flex items-center h-12 rounded-md cursor-pointer group ${
@@ -89,32 +112,33 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onToggle, activePage = "Overvie
                 : "text-gray-300 hover:text-white hover:bg-red-600/30 hover:scale-[1.01]"
             }`}
             style={{
-              transition: 'color 300ms ease-out, background-color 300ms ease-out, border-color 300ms ease-out, box-shadow 300ms ease-out, transform 300ms ease-out'
+              transition:
+                "color 300ms ease-out, background-color 300ms ease-out, border-color 300ms ease-out, box-shadow 300ms ease-out, transform 300ms ease-out",
             }}
             onClick={() => onPageChange?.(item.label)}
           >
-              <div className="absolute left-4 flex items-center justify-center w-7 h-7">
-                {item.icon}
-              </div>
-              
-              <div 
-                className={`
+            <div className="absolute left-4 flex items-center justify-center w-7 h-7">
+              {item.icon}
+            </div>
+
+            <div
+              className={`
                   absolute left-16 transition-all duration-300 pointer-events-none
                   ${open ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}
                 `}
+            >
+              <span
+                className="text-lg font-medium whitespace-nowrap"
+                style={{ fontFamily: "'Orbitron', sans-serif" }}
               >
-                <span 
-                  className="text-lg font-medium whitespace-nowrap"
-                  style={{ fontFamily: "'Orbitron', sans-serif" }}
-                >
-                  {item.label}
-                </span>
-              </div>
+                {item.label}
+              </span>
             </div>
+          </div>
         ))}
       </nav>
 
-      <div 
+      <div
         className={`
           h-px bg-gradient-to-r from-red-500/60 via-red-400/80 to-red-500/60
           transition-all duration-300 ease-in-out mx-2
@@ -125,7 +149,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onToggle, activePage = "Overvie
       <div className="p-3">
         <div className="flex items-center relative">
           {/* Username */}
-          <div 
+          <div
             className={`
               text-sm font-medium text-gray-300
               transition-all duration-300 ease-in-out
@@ -136,10 +160,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onToggle, activePage = "Overvie
           >
             Racer123
           </div>
-          
+
           {/* Avatar */}
           <div className="flex-1 flex justify-end">
-            <Avatar 
+            <Avatar
               className={`
                 w-8 h-8 border border-red-500/40 shadow-md shadow-red-900/40
                 transition-all duration-300 ease-in-out
@@ -154,7 +178,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onToggle, activePage = "Overvie
           </div>
         </div>
       </div>
-      
+
       <div className="absolute right-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-500/80 via-red-400 to-red-500/80 shadow-lg shadow-red-500/50" />
     </div>
   );

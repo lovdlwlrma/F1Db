@@ -1,5 +1,12 @@
 import React from "react";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Driver, LapData } from "@/types/telemetry";
 
 interface Props {
@@ -28,17 +35,28 @@ interface Props {
 }
 
 const SelectBar: React.FC<Props> = ({
-  year, setYear,
-  country, setCountry,
-  sessionName, setSessionName,
-  raceNames, sessionTypes,
+  year,
+  setYear,
+  country,
+  setCountry,
+  sessionName,
+  setSessionName,
+  raceNames,
+  sessionTypes,
   availableDrivers,
-  selectedDriver1, setSelectedDriver1,
-  selectedDriver2, setSelectedDriver2,
-  laps1, selectedLap1, setSelectedLap1,
-  laps2, selectedLap2, setSelectedLap2
+  selectedDriver1,
+  setSelectedDriver1,
+  selectedDriver2,
+  setSelectedDriver2,
+  laps1,
+  selectedLap1,
+  setSelectedLap1,
+  laps2,
+  selectedLap2,
+  setSelectedLap2,
 }) => {
-  const selectContentClass = "bg-gray-800 text-white shadow-lg rounded-md overflow-y-auto";
+  const selectContentClass =
+    "bg-gray-800 text-white shadow-lg rounded-md overflow-y-auto";
   const selectItemClass = "hover:bg-gray-700 px-2 py-1 rounded";
 
   return (
@@ -46,42 +64,69 @@ const SelectBar: React.FC<Props> = ({
       {/* 第一行 */}
       <div className="flex gap-4 w-full justify-center flex-wrap">
         {/* Year */}
-        <Select value={year.toString()} onValueChange={val => setYear(Number(val))}>
+        <Select
+          value={year.toString()}
+          onValueChange={(val) => setYear(Number(val))}
+        >
           <SelectTrigger className="w-28 bg-gray-700 text-white rounded">
             <SelectValue placeholder="Year" />
           </SelectTrigger>
-          <SelectContent className={selectContentClass} style={{ minWidth: '100%' }}>
+          <SelectContent
+            className={selectContentClass}
+            style={{ minWidth: "100%" }}
+          >
             <SelectGroup>
               {[2023, 2024, 2025].map((y, idx) => (
-                <SelectItem key={`year-${y}-${idx}`} value={y.toString()} className={selectItemClass}>{y}</SelectItem>
+                <SelectItem
+                  key={`year-${y}-${idx}`}
+                  value={y.toString()}
+                  className={selectItemClass}
+                >
+                  {y}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
         </Select>
 
         {/* Grand Prix */}
-        <Select value={country} onValueChange={val => setCountry(val)}>
+        <Select value={country} onValueChange={(val) => setCountry(val)}>
           <SelectTrigger className="w-72 bg-gray-700 text-white rounded">
             <SelectValue placeholder="Race" />
           </SelectTrigger>
           <SelectContent className={selectContentClass}>
             <SelectGroup>
               {raceNames.map((name, idx) => (
-                <SelectItem key={`race-${name}-${idx}`} value={name} className={selectItemClass}>{name}</SelectItem>
+                <SelectItem
+                  key={`race-${name}-${idx}`}
+                  value={name}
+                  className={selectItemClass}
+                >
+                  {name}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
         </Select>
 
         {/* Session Name */}
-        <Select value={sessionName} onValueChange={val => setSessionName(val)}>
+        <Select
+          value={sessionName}
+          onValueChange={(val) => setSessionName(val)}
+        >
           <SelectTrigger className="w-40 bg-gray-700 text-white rounded">
             <SelectValue placeholder="Session" />
           </SelectTrigger>
           <SelectContent className={selectContentClass}>
             <SelectGroup>
               {sessionTypes.map((name, idx) => (
-                <SelectItem key={`session-${name}-${idx}`} value={name} className={selectItemClass}>{name}</SelectItem>
+                <SelectItem
+                  key={`session-${name}-${idx}`}
+                  value={name}
+                  className={selectItemClass}
+                >
+                  {name}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
@@ -93,8 +138,10 @@ const SelectBar: React.FC<Props> = ({
       <div className="flex gap-4">
         <Select
           value={selectedDriver1 ? String(selectedDriver1.driver_number) : ""}
-          onValueChange={val => {
-            const driver = availableDrivers.find(d => String(d.driver_number) === val);
+          onValueChange={(val) => {
+            const driver = availableDrivers.find(
+              (d) => String(d.driver_number) === val,
+            );
             setSelectedDriver1(driver ?? null);
           }}
         >
@@ -103,9 +150,15 @@ const SelectBar: React.FC<Props> = ({
           </SelectTrigger>
           <SelectContent className={selectContentClass}>
             <SelectGroup>
-              {availableDrivers.map(d => (
-                <SelectItem key={`d1-${d.driver_number}`} value={String(d.driver_number)} className={selectItemClass}>
-                  <span style={{ color: `#${d.team_colour}` }}>{d.full_name}</span>
+              {availableDrivers.map((d) => (
+                <SelectItem
+                  key={`d1-${d.driver_number}`}
+                  value={String(d.driver_number)}
+                  className={selectItemClass}
+                >
+                  <span style={{ color: `#${d.team_colour}` }}>
+                    {d.full_name}
+                  </span>
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -115,27 +168,34 @@ const SelectBar: React.FC<Props> = ({
         {/* Lap 1 */}
         <Select
           value={selectedLap1 ? String(selectedLap1.lap_number) : ""}
-          onValueChange={val => {
-            const lap = laps1.find(l => String(l.lap_number) === val);
+          onValueChange={(val) => {
+            const lap = laps1.find((l) => String(l.lap_number) === val);
             setSelectedLap1(lap ?? null);
           }}
         >
           <SelectTrigger className="w-28 bg-gray-700 text-white rounded">
             <SelectValue placeholder="Lap" />
           </SelectTrigger>
-          <SelectContent className={selectContentClass} style={{ minWidth: '100%' }}>
+          <SelectContent
+            className={selectContentClass}
+            style={{ minWidth: "100%" }}
+          >
             <SelectGroup>
-              {laps1.length > 0
-                ? laps1.map(l => (
-                    <SelectItem
-                      key={`lap1-${l.lap_number}`}
-                      value={String(l.lap_number)}
-                      className={selectItemClass}
-                    >
-                      Lap {l.lap_number}
-                    </SelectItem>
-                  ))
-                : <SelectItem value="no-laps" disabled>No laps</SelectItem>}
+              {laps1.length > 0 ? (
+                laps1.map((l) => (
+                  <SelectItem
+                    key={`lap1-${l.lap_number}`}
+                    value={String(l.lap_number)}
+                    className={selectItemClass}
+                  >
+                    Lap {l.lap_number}
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem value="no-laps" disabled>
+                  No laps
+                </SelectItem>
+              )}
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -145,8 +205,10 @@ const SelectBar: React.FC<Props> = ({
       <div className="flex gap-4">
         <Select
           value={selectedDriver2 ? String(selectedDriver2.driver_number) : ""}
-          onValueChange={val => {
-            const driver = availableDrivers.find(d => String(d.driver_number) === val);
+          onValueChange={(val) => {
+            const driver = availableDrivers.find(
+              (d) => String(d.driver_number) === val,
+            );
             setSelectedDriver2(driver ?? null);
           }}
         >
@@ -155,9 +217,15 @@ const SelectBar: React.FC<Props> = ({
           </SelectTrigger>
           <SelectContent className={selectContentClass}>
             <SelectGroup>
-              {availableDrivers.map(d => (
-                <SelectItem key={`d2-${d.driver_number}`} value={String(d.driver_number)} className={selectItemClass}>
-                  <span style={{ color: `#${d.team_colour}` }}>{d.full_name}</span>
+              {availableDrivers.map((d) => (
+                <SelectItem
+                  key={`d2-${d.driver_number}`}
+                  value={String(d.driver_number)}
+                  className={selectItemClass}
+                >
+                  <span style={{ color: `#${d.team_colour}` }}>
+                    {d.full_name}
+                  </span>
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -167,8 +235,8 @@ const SelectBar: React.FC<Props> = ({
         {/* Lap 2 (只有選 driver2 才能操作) */}
         <Select
           value={selectedLap2 ? String(selectedLap2.lap_number) : ""}
-          onValueChange={val => {
-            const lap = laps2.find(l => String(l.lap_number) === val);
+          onValueChange={(val) => {
+            const lap = laps2.find((l) => String(l.lap_number) === val);
             setSelectedLap2(lap ?? null);
           }}
           disabled={!selectedDriver2}
@@ -176,19 +244,26 @@ const SelectBar: React.FC<Props> = ({
           <SelectTrigger className="w-28 bg-gray-700 text-white rounded">
             <SelectValue placeholder="Lap" />
           </SelectTrigger>
-          <SelectContent className={selectContentClass} style={{ minWidth: '100%' }}>
+          <SelectContent
+            className={selectContentClass}
+            style={{ minWidth: "100%" }}
+          >
             <SelectGroup>
-              {laps2.length > 0
-                ? laps2.map(l => (
-                    <SelectItem
-                      key={`lap2-${l.lap_number}`}
-                      value={String(l.lap_number)}
-                      className={selectItemClass}
-                    >
-                      Lap {l.lap_number}
-                    </SelectItem>
-                  ))
-                : <SelectItem value="no-laps" disabled>No laps</SelectItem>}
+              {laps2.length > 0 ? (
+                laps2.map((l) => (
+                  <SelectItem
+                    key={`lap2-${l.lap_number}`}
+                    value={String(l.lap_number)}
+                    className={selectItemClass}
+                  >
+                    Lap {l.lap_number}
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem value="no-laps" disabled>
+                  No laps
+                </SelectItem>
+              )}
             </SelectGroup>
           </SelectContent>
         </Select>
