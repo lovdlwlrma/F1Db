@@ -31,9 +31,10 @@ const CircuitMap: React.FC<CircuitMapProps> = ({ nextRace, loading }) => {
   }
 
   const getCircuitImage = (grandPrixName: string) => {
-    const firstWord = grandPrixName.split(" ")[0];
-    return `/src/assets/Circuit/${firstWord}.avif`;
+    const country = grandPrixName.replace(/ Grand Prix$/i, "");
+    return `/src/assets/Circuit/${country}.avif`;
   };
+
 
   return (
     <div className="bg-gray-900 rounded-lg p-2">
