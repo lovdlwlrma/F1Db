@@ -1,11 +1,11 @@
-.PHONY: qs run deps build fmt compose-up compose-down help
+.PHONY: qs run deps build fmt help
 
 BLUE=\033[0;34m
 GREEN=\033[0;32m
 RED=\033[0;31m
 NC=\033[0m
 
-qs: compose-up deps build run
+qs: deps build run
 
 run:
 	@echo "$(GREEN)Starting all services...$(NC)"
@@ -35,23 +35,10 @@ fmt:
 	@echo "$(BLUE)Formatting frontend code...$(NC)"
 	cd frontend && npm run format
 
-compose-up:
-	@echo "$(BLUE)Starting all containers...$(NC)"
-	cd backend && docker-compose up -d
-	@echo "$(BLUE)Waiting for services to be ready...$(NC)"
-	@sleep 10
-
-compose-down:
-	@echo "$(BLUE)Stopping and removing all containers, volumes, and images...$(NC)"
-	cd backend && docker-compose down --volumes --remove-orphans --rmi all
-	@echo "$(GREEN)All Docker resources cleaned up$(NC)"
-
 help:
 	@echo "\n$(GREEN)Available commands:$(NC)"
 	@printf "  %-18s - %s\n" "make run" "Run project service"
 	@printf "  %-18s - %s\n" "make deps" "Install project dependencies"
 	@printf "  %-18s - %s\n" "make build" "Build the project for production"
 	@printf "  %-18s - %s\n" "make fmt" "Format the project code"
-	@printf "  %-18s - %s\n" "make compose-up" "Start all Docker containers"
-	@printf "  %-18s - %s\n" "make compose-down" "Stop and remove all Docker containers, volumes, and images"
 	@printf "  %-18s - %s\n" "make help" "Show this help message"

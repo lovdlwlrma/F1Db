@@ -1,8 +1,6 @@
 package routes
 
 import (
-	"lovdlwlrma/backend/deployments/database/cassandra"
-	"lovdlwlrma/backend/deployments/database/postgres"
 	"lovdlwlrma/backend/internal/log"
 	"lovdlwlrma/backend/internal/server/controller"
 	openf1controller "lovdlwlrma/backend/internal/server/controller/openf1"
@@ -18,12 +16,10 @@ const (
 )
 
 // RegisterRoutes registers all application routes.
-func RegisterRoutes(rg *gin.RouterGroup, pg *postgres.PostgresDB, cas *cassandra.CassandraDB) {
-	controller.RegisterHealthRoutes(rg, pg, cas)
-	controller.RegisterUserRoutes(rg, pg)
-	controller.RegisterLogRoutes(rg, cas)
+func RegisterRoutes(rg *gin.RouterGroup) {
+	controller.RegisterHealthRoutes(rg)
 
-	// OpenF1 latest session endpoint
+	// OpenF1 API endpoints
 	f1logger := log.With(zap.String("service", "openf1"))
 	openf1controller.RegisterOpenF1SessionRoutes(rg, f1logger)
 	openf1controller.RegisterOpenF1MeetingRoutes(rg, f1logger)

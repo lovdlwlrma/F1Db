@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"time"
 
-	"lovdlwlrma/backend/deployments/database/cassandra"
-	"lovdlwlrma/backend/deployments/database/postgres"
 	"lovdlwlrma/backend/internal/log"
 	"lovdlwlrma/backend/internal/server/middleware"
 	"lovdlwlrma/backend/internal/server/routes"
@@ -21,12 +19,10 @@ import (
 type Server struct {
 	router *gin.Engine
 	srv    *http.Server
-	pg     *postgres.PostgresDB
-	cas    *cassandra.CassandraDB
 }
 
 // NewServer creates a new server instance
-func NewServer(pg *postgres.PostgresDB, cas *cassandra.CassandraDB) *Server {
+func NewServer() *Server {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
 
@@ -41,8 +37,6 @@ func NewServer(pg *postgres.PostgresDB, cas *cassandra.CassandraDB) *Server {
 
 	server := &Server{
 		router: router,
-		pg:     pg,
-		cas:    cas,
 	}
 
 	// Swagger
@@ -50,7 +44,7 @@ func NewServer(pg *postgres.PostgresDB, cas *cassandra.CassandraDB) *Server {
 
 	// API 路由
 	api := router.Group("/api/v1")
-	routes.RegisterRoutes(api, pg, cas)
+	routes.RegisterRoutes(api)
 
 	return server
 }
