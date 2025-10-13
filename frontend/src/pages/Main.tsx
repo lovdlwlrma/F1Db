@@ -6,6 +6,7 @@ import Overview from "./Overview";
 import Telemetry from "./Telemetry";
 import Analytics from "./Analytics";
 import Standings from "./Standings";
+import Calendar from "./Calendar";
 
 const DashboardPage = () => {
   const [open, setOpen] = useState(true);
@@ -87,6 +88,8 @@ const DashboardPage = () => {
               <Analytics />
             ) : activePage === "Standings" ? (
               <Standings />
+            ) : activePage === "Calendar" ? (
+              <Calendar />
             ) : (
               <div>
                 <h1 className="text-2xl font-bold mb-4">
