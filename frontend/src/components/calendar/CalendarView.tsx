@@ -50,7 +50,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
       <div className="space-y-6">
         {data.races.map((race) => (
           <TimelineItem
-            key={race.meeting_key}
+            key={`${race.title}-${race.year}-${race.round}`}
             race={race}
             onClick={onRaceClick}
             isPast={isPastRace(race)}

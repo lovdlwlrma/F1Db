@@ -4,14 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   LayoutDashboard,
   BarChart3,
-  Settings,
   ChevronsRight,
   ChevronsLeft,
   Gauge,
   Calendar,
   Trophy,
-  Users,
-  Route,
   Activity,
 } from "lucide-react";
 
@@ -34,10 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     { icon: <Activity size={28} />, label: "Telemetry" },
     { icon: <BarChart3 size={28} />, label: "Analytics" },
     { icon: <Trophy size={28} />, label: "Standings" },
-    { icon: <Calendar size={28} />, label: "Calendar" },
-    { icon: <Route size={28} />, label: "Tracks" },
-    { icon: <Users size={28} />, label: "Drivers" },
-    { icon: <Settings size={28} />, label: "Settings" },
+    { icon: <Calendar size={28} />, label: "Schedule" },
   ];
 
   return (

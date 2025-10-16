@@ -13,7 +13,7 @@ function App() {
         <Route path="/live-timing" element={<Main />} />
         <Route path="/analytics" element={<Main />} />
         <Route path="/standings" element={<Main />} />
-        <Route path="/calendar" element={<Main />} />
+        <Route path="/schedule" element={<Main />} />
         <Route path="/tracks" element={<Main />} />
         <Route path="/drivers" element={<Main />} />
         <Route path="/settings" element={<Main />} />

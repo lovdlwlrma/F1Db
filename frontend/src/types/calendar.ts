@@ -1,5 +1,3 @@
-// types/calendar.ts
-
 export interface Session {
   name: string;
   type: string;

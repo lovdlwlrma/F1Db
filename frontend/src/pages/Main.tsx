@@ -28,10 +28,7 @@ const DashboardPage = () => {
       "live-timing": "Live Timing",
       analytics: "Analytics",
       standings: "Standings",
-      calendar: "Calendar",
-      tracks: "Tracks",
-      drivers: "Drivers",
-      settings: "Settings",
+      schedule: "Schedule",
     };
 
     const pageName = pageMap[pathSegment] || "Overview";
@@ -45,10 +42,7 @@ const DashboardPage = () => {
       Telemetry: "telemetry",
       Analytics: "analytics",
       Standings: "standings",
-      Calendar: "calendar",
-      Tracks: "tracks",
-      Drivers: "drivers",
-      Settings: "settings",
+      Schedule: "schedule",
     };
 
     const url = pageUrlMap[page] || "overview";
@@ -88,7 +82,7 @@ const DashboardPage = () => {
               <Analytics />
             ) : activePage === "Standings" ? (
               <Standings />
-            ) : activePage === "Calendar" ? (
+            ) : activePage === "Schedule" ? (
               <Calendar />
             ) : (
               <div>
