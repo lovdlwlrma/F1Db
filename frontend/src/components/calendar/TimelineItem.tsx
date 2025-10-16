@@ -1,5 +1,3 @@
-// components/calendar/TimelineItem.tsx
-
 import React from "react";
 import { MapPin, Calendar, Flag } from "lucide-react";
 import { Race } from "@/types/calendar";

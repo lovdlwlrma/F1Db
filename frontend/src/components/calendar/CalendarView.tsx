@@ -1,5 +1,3 @@
-// components/calendar/CalendarView.tsx
-
 import React from "react";
 import { CalendarData, Race, ViewMode } from "@/types/calendar";
 import { RaceCard } from "./RaceCard";

@@ -1,9 +1,7 @@
-// pages/calendar.tsx
-
 import React, { useState, useEffect } from "react";
 import { CalendarLayout } from "@/layouts/CalendarLayout";
 import { CalendarView } from "@/components/calendar/CalendarView";
-import { RaceDetailModal } from "@/components/calendar/RaceDetailModal";
+import RaceDetailModal from "@/components/calendar/RaceDetailModal";
 import { CalendarService } from "@/services/calendar";
 import { CalendarData, Race, ViewMode } from "@/types/calendar";
 

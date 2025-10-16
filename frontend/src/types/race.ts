@@ -49,7 +49,7 @@ export interface Race {
   title: string;
   year: number;
   round: number;
-  name: string; // e.g. "Azerbaijan Grand Prix"
+  name: string;
   country: string;
   city: string;
   country_flag_image_url: string;

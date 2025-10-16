@@ -1,5 +1,3 @@
-// components/calendar/helpers.tsx
-
 import { Race } from "@/types/calendar";
 
 export const isPastRace = (race: Race): boolean => {

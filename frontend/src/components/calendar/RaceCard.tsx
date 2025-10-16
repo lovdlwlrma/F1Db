@@ -1,5 +1,3 @@
-// components/calendar/RaceCard.tsx
-
 import React from "react";
 import { MapPin, Clock, Flag } from "lucide-react";
 import { Race } from "@/types/calendar";
