@@ -48,7 +48,7 @@ export interface Race {
   sessions: Session[];
 }
 
-export interface CalendarData {
+export interface ScheduleData {
   year: number;
   races: Race[];
 }

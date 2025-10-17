@@ -1,16 +1,16 @@
 import React from "react";
-import { CalendarData, Race, ViewMode } from "@/types/calendar";
+import { ScheduleData, Race, ViewMode } from "@/types/schedule";
 import { RaceCard } from "./RaceCard";
 import { TimelineItem } from "./TimelineItem";
 import { isPastRace, isUpcomingRace, groupRacesByMonth } from "./helpers";
 
-interface CalendarViewProps {
-  data: CalendarData;
+interface ScheduleViewProps {
+  data: ScheduleData;
   viewMode: ViewMode;
   onRaceClick: (race: Race) => void;
 }
 
-export const CalendarView: React.FC<CalendarViewProps> = ({
+export const ScheduleView: React.FC<ScheduleViewProps> = ({
   data,
   viewMode,
   onRaceClick,
