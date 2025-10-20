@@ -1,4 +1,8 @@
-import { Meeting, Session, Driver, LapData, CarData } from "@/types/telemetry";
+import { Meeting } from "@/types/Openf1API/meetings";
+import { Session } from "@/types/Openf1API/sessions";
+import { Driver } from "@/types/Openf1API/drivers";
+import { Lap } from "@/types/Openf1API/laps";
+import { TelemetryLap } from "@/types/Openf1API/telemetry";
 
 const API_BASE_URL = "http://localhost:8080/api/v1";
 
@@ -41,8 +45,8 @@ export class TelemetryService {
   static async getLaps(
     sessionKey: number,
     driverNumber: number,
-  ): Promise<LapData[]> {
-    return this.fetchData<LapData[]>(
+  ): Promise<Lap[]> {
+    return this.fetchData<Lap[]>(
       `${API_BASE_URL}/openf1/laps/${sessionKey}/${driverNumber}`,
     );
   }
@@ -52,8 +56,8 @@ export class TelemetryService {
     sessionKey: number,
     driverNumber: number,
     lapNumber: number,
-  ): Promise<CarData> {
-    return this.fetchData<CarData>(
+  ): Promise<TelemetryLap> {
+    return this.fetchData<TelemetryLap>(
       `${API_BASE_URL}/openf1/telemetry/${sessionKey}/${driverNumber}/${lapNumber}`,
     );
   }

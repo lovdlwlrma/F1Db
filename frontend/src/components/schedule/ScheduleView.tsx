@@ -1,5 +1,5 @@
 import React from "react";
-import { ScheduleData, Race, ViewMode } from "@/types/schedule";
+import { ScheduleData, Race, ViewMode } from "@/types/race";
 import { RaceCard } from "./RaceCard";
 import { TimelineItem } from "./TimelineItem";
 import { isPastRace, isUpcomingRace, groupRacesByMonth } from "./helpers";

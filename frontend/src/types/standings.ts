@@ -1,3 +1,10 @@
+export interface SeasonData {
+  year: number;
+  total_rounds: number;
+  locations: string[];
+  driver_standings: DriverStanding[];
+}
+
 export interface DriverStanding {
   driver_number: number;
   full_name: string;
@@ -8,13 +15,6 @@ export interface DriverStanding {
   round_points: number[];
   cumulative_points: number[];
   positions: number[];
-}
-
-export interface SeasonData {
-  year: number;
-  total_rounds: number;
-  locations: string[];
-  driver_standings: DriverStanding[];
 }
 
 export interface TeamStanding {

@@ -10,10 +10,7 @@ const PageTransition: React.FC<PageTransitionProps> = ({
   pageKey,
 }) => {
   return (
-    <div
-      key={pageKey}
-      className="animate-in slide-in-from-left-4 duration-700"
-    >
+    <div key={pageKey} className="animate-in slide-in-from-left-4 duration-700">
       {children}
     </div>
   );

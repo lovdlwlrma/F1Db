@@ -62,15 +62,11 @@ export const getRouteByPath = (path: string): NavigationRoute | undefined => {
   const pathSegment = path.startsWith("/") ? path.slice(1) : path;
 
   // 查找匹配的路由
-  return NAVIGATION_ROUTES.find(
-    (route) => route.urlSegment === pathSegment
-  );
+  return NAVIGATION_ROUTES.find((route) => route.urlSegment === pathSegment);
 };
 
 // 根據頁面名稱獲取路由配置
-export const getRouteByName = (
-  name: string
-): NavigationRoute | undefined => {
+export const getRouteByName = (name: string): NavigationRoute | undefined => {
   return NAVIGATION_ROUTES.find((route) => route.name === name);
 };
 

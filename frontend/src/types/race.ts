@@ -21,11 +21,11 @@ export interface Session {
   end_date: string;
   gmt_offset: string;
   session_key: number;
-  path: string;
-  replay_saved_at: string | null;
-  replay_size: number;
-  grandprix_id: number;
-  weathers: Weather[];
+  path?: string;
+  replay_saved_at?: string | null;
+  replay_size?: number;
+  grandprix_id?: number;
+  weathers?: Weather[];
 }
 
 export interface Circuit {
@@ -62,8 +62,15 @@ export interface Race {
   sessions: Session[];
 }
 
+export interface ScheduleData {
+  year: number;
+  races: Race[];
+}
+
 // /race/next API response
 export interface NextRaceApiResponse {
   data: Race;
   message: string;
 }
+
+export type ViewMode = "timeline" | "grid";

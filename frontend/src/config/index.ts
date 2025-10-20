@@ -57,8 +57,7 @@ export const config = {
   sentryDSN: env.VITE_SENTRY_DSN || "",
 
   /** build version (can be injected via CI/CD) */
-  version:
-    typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "0.0.1",
+  version: typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "0.0.1",
 };
 
 /**

@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
-import { Driver, Stints, Result } from "@/types/analytics";
+import { Driver } from "@/types/Openf1API/drivers";
+import { Stint } from "@/types/Openf1API/stints";
+import { RaceResult } from "@/types/Openf1API/result";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,9 +24,9 @@ ChartJS.register(
 );
 
 interface Props {
-  stints?: Record<number, Stints[]> | null;
+  stints?: Record<number, Stint[]> | null;
   drivers?: Driver[];
-  results?: Result[];
+  results?: RaceResult[];
   height?: number;
 }
 

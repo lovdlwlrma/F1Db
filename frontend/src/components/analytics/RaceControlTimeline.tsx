@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Flag, Clock, AlertTriangle, Info, Gavel } from "lucide-react";
-import { RaceControl } from "@/types/analytics";
+import { RaceControl } from "@/types/Openf1API/raceControl";
 
 interface RaceControlTimelineProps {
   raceControls: RaceControl[];

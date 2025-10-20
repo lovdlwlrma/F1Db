@@ -1,18 +1,16 @@
 import { useMemo } from "react";
-import {
-  Driver,
-  Result,
-  SessionLapRankingResponse,
-  TeamStats,
-} from "@/types/analytics";
+import { Driver } from "@/types/Openf1API/drivers";
+import { RaceResult } from "@/types/Openf1API/result";
+import { Positions } from "@/types/Openf1API/positions";
+import { TeamStats } from "@/types/analytics";
 import { Trophy, Clock, Award, TrendingUp } from "lucide-react";
 
 const POINTS: number[] = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
 
 interface Props {
   drivers: Driver[];
-  results: Result[];
-  lapRankings: SessionLapRankingResponse | null;
+  results: RaceResult[];
+  lapRankings: Positions | null;
   grandPrixName: string;
 }
 

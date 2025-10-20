@@ -8,7 +8,7 @@ interface PageRouterProps {
 
 const PageRouter: React.FC<PageRouterProps> = ({ activePage }) => {
   const currentRoute = NAVIGATION_ROUTES.find(
-    (route) => route.name === activePage
+    (route) => route.name === activePage,
   );
 
   if (!currentRoute) {

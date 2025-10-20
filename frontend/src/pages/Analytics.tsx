@@ -5,25 +5,24 @@ import LapRankingChart from "@/components/analytics/LapRankingChart";
 import TyreStintsChart from "@/components/analytics/TyreStintsChart";
 import RaceStatisticsTable from "@/components/analytics/RaceStatisticsTable";
 import RaceControlTimeline from "@/components/analytics/RaceControlTimeline";
-import {
-  Driver,
-  Session,
-  Stints,
-  Result,
-  SessionLapRankingResponse,
-  RaceControl,
-} from "@/types/analytics";
+import { Meeting } from "@/types/Openf1API/meetings";
+import { Session } from "@/types/Openf1API/sessions";
+import { Driver } from "@/types/Openf1API/drivers";
+import { Stint } from "@/types/Openf1API/stints";
+import { RaceResult } from "@/types/Openf1API/result";
+import { Positions } from "@/types/Openf1API/positions";
+import { RaceControl } from "@/types/Openf1API/raceControl";
+
 import { AnalyticsService } from "@/services/analytics";
-import { Meeting } from "@/types/telemetry";
 import { withRetry } from "@/utils/retry";
 
 interface Cache {
   meetings: { [year: number]: Meeting[] };
   sessions: { [meetingKey: number]: Session[] };
-  lapRankings: { [sessionKey: number]: SessionLapRankingResponse };
+  lapRankings: { [sessionKey: number]: Positions };
   drivers: { [sessionKey: number]: Driver[] };
-  stints: { [sessionKey: number]: Record<number, Stints[]> };
-  results: { [sessionKey: number]: Result[] };
+  stints: { [sessionKey: number]: Record<number, Stint[]> };
+  results: { [sessionKey: number]: RaceResult[] };
   raceControls: { [sessionKey: number]: RaceControl[] };
 }
 
@@ -32,10 +31,10 @@ const AnalyticsPage: React.FC = () => {
   const [grandPrix, setGrandPrix] = useState<Meeting | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [lapRankings, setLapRankings] =
-    useState<SessionLapRankingResponse | null>(null);
+    useState<Positions | null>(null);
   const [drivers, setDrivers] = useState<Driver[]>([]);
-  const [stints, setStints] = useState<Record<number, Stints[]> | null>(null);
-  const [results, setResults] = useState<Result[]>([]);
+  const [stints, setStints] = useState<Record<number, Stint[]> | null>(null);
+  const [results, setResults] = useState<RaceResult[]>([]);
   const [raceControls, setRaceControls] = useState<RaceControl[]>([]);
   const [cache, setCache] = useState<Cache>({
     meetings: {},

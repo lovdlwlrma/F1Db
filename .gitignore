@@ -4,6 +4,8 @@ backend/build/
 #frontend
 frontend/node_modules/
 frontend/dist/
+frontend/.env.development
+frontend/.env.production
 
 #global
 .DS_Store

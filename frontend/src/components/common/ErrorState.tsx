@@ -9,9 +9,7 @@ const ErrorState: React.FC<ErrorStateProps> = ({ message, onRetry }) => {
   return (
     <div className="text-center py-12">
       <div className="text-red-500 text-6xl mb-4">⚠️</div>
-      <h2 className="text-2xl font-bold text-white mb-2">
-        Error Loading Data
-      </h2>
+      <h2 className="text-2xl font-bold text-white mb-2">Error Loading Data</h2>
       <p className="text-gray-400 mb-4">{message}</p>
       {onRetry && (
         <button

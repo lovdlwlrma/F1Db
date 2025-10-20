@@ -7,7 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Driver, LapData } from "@/types/telemetry";
+import { Driver } from "@/types/Openf1API/drivers"
+import { Lap } from "@/types/Openf1API/laps";
 
 interface Props {
   year: number;
@@ -22,16 +23,16 @@ interface Props {
 
   selectedDriver1: Driver | null;
   setSelectedDriver1: (driver: Driver | null) => void;
-  selectedLap1: LapData | null;
-  setSelectedLap1: (lap: LapData | null) => void;
+  selectedLap1: Lap | null;
+  setSelectedLap1: (lap: Lap | null) => void;
 
   selectedDriver2: Driver | null;
   setSelectedDriver2: (driver: Driver | null) => void;
-  selectedLap2: LapData | null;
-  setSelectedLap2: (lap: LapData | null) => void;
+  selectedLap2: Lap | null;
+  setSelectedLap2: (lap: Lap | null) => void;
 
-  laps1: LapData[];
-  laps2: LapData[];
+  laps1: Lap[];
+  laps2: Lap[];
 }
 
 const SelectBar: React.FC<Props> = ({

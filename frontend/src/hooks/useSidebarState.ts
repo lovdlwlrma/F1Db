@@ -7,7 +7,7 @@ interface UseSidebarStateReturn {
 }
 
 export const useSidebarState = (
-  initialState: boolean = true
+  initialState: boolean = true,
 ): UseSidebarStateReturn => {
   const [open, setOpen] = useState(initialState);
 
