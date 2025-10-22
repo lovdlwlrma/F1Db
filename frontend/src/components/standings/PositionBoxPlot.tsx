@@ -1,9 +1,9 @@
 import React from "react";
 import { Target } from "lucide-react";
-import { SeasonData } from "@/types/standings";
+import { SeasonStanding } from "@/types/Openf1API/standings";
 
 interface PositionBoxPlotProps {
-  data: SeasonData;
+  data: SeasonStanding;
 }
 
 export const PositionBoxPlot: React.FC<PositionBoxPlotProps> = ({ data }) => {

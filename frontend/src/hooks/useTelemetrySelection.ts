@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Driver } from "@/types/Openf1API/drivers";
+import { COMMON_CONFIG } from "@/config/common.config";
 
 interface UseTelemetrySelectionReturn {
   year: number;
@@ -12,7 +13,7 @@ interface UseTelemetrySelectionReturn {
 }
 
 export const useTelemetrySelection = (
-  initialYear: number = 2025,
+  initialYear: number = COMMON_CONFIG.DEFAULT_YEAR,
 ): UseTelemetrySelectionReturn => {
   const [year, setYear] = useState(initialYear);
   const [selectedDriver1, setSelectedDriver1] = useState<Driver | null>(null);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { OverviewService } from "@/services/overview";
+import { RaceService } from "@/services/race";
 import { Race } from "@/types/race";
 
 interface UseNextRaceReturn {
@@ -18,7 +18,7 @@ export const useNextRace = (): UseNextRaceReturn => {
     try {
       setLoading(true);
       setError(null);
-      const response = await OverviewService.getNextRace();
+      const response = await RaceService.getNextRace();
       setNextRace(response.data);
     } catch (err) {
       console.error("Failed to fetch next race:", err);

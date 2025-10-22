@@ -9,10 +9,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { TrendingUp } from "lucide-react";
-import { SeasonData } from "@/types/standings";
+import { SeasonStanding } from "@/types/Openf1API/standings";
 
 interface DriverPointsChartProps {
-  data: SeasonData;
+  data: SeasonStanding;
 }
 
 export const DriverPointsChart: React.FC<DriverPointsChartProps> = ({

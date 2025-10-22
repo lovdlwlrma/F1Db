@@ -1,43 +1,31 @@
-import {
-  SeasonData,
-  TeamStanding,
-  DriverPositionStats,
-} from "@/types/standings";
+import { baseApiClient } from "@/services/baseApiClient";
+import { TeamStanding, DriverPositionStats } from "@/types/standings";
+import { SeasonStanding } from "@/types/Openf1API/standings";
+import { OpenF1Service } from "@/services/Openf1API/standings";
 
-const API_BASE_URL = "http://localhost:8080/api/v1/openf1";
-
-export class StandingsService {
+export class StandingsService extends baseApiClient {
   /**
    * 獲取車手積分榜數據
    */
-  static async getDriverStanding(year: number): Promise<SeasonData[]> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/standings/${year}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      // 如果 API 回傳單一物件，包裝成陣列
-      return Array.isArray(data) ? data : [data];
-    } catch (error) {
-      console.error("獲取車手積分榜數據失敗:", error);
-      throw error;
-    }
+  static async getDriverStandings(year: number): Promise<SeasonStanding[]> {
+    return OpenF1Service.getStandings(year);
   }
 
   /**
    * 計算車隊積分
    */
-  static calculateTeamStandings(seasonData: SeasonData): TeamStanding[] {
+  static calculateTeamStandings(
+    seasonStanding: SeasonStanding,
+  ): TeamStanding[] {
     const teamsMap = new Map<string, TeamStanding>();
 
-    seasonData.driver_standings.forEach((driver) => {
+    seasonStanding.driver_standings.forEach((driver) => {
       if (!teamsMap.has(driver.team_name)) {
         teamsMap.set(driver.team_name, {
           team_name: driver.team_name,
           team_colour: driver.team_colour,
           total_points: 0,
-          cumulative_points: new Array(seasonData.total_rounds).fill(0),
+          cumulative_points: new Array(seasonStanding.total_rounds).fill(0),
           drivers: [],
         });
       }
@@ -61,8 +49,10 @@ export class StandingsService {
   /**
    * 計算車手位置統計(Box Plot 數據)
    */
-  static calculatePositionStats(seasonData: SeasonData): DriverPositionStats[] {
-    return seasonData.driver_standings
+  static calculatePositionStats(
+    seasonStanding: SeasonStanding,
+  ): DriverPositionStats[] {
+    return seasonStanding.driver_standings
       .map((driver) => {
         // 過濾掉無效位置(-1, 0)
         const validPositions = driver.positions.filter((pos) => pos > 0);

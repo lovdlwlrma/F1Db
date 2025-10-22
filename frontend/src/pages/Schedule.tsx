@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ScheduleLayout } from "@/layouts/ScheduleLayout";
 import { ScheduleView } from "@/components/schedule/ScheduleView";
 import RaceDetailModal from "@/components/schedule/RaceDetailModal";
-import { ScheduleService } from "@/services/schedule";
+import { RaceService } from "@/services/race";
 import { ScheduleData, Race, ViewMode } from "@/types/race";
 
 export const SchedulePage: React.FC = () => {
@@ -19,7 +19,7 @@ export const SchedulePage: React.FC = () => {
         setLoading(true);
         setError(null);
         console.log("Starting to fetch schedule data...");
-        const scheduleData = await ScheduleService.getSchedule(currentYear);
+        const scheduleData = await RaceService.getSchedule(currentYear);
         console.log("Schedule data received:", scheduleData);
         setData(scheduleData);
       } catch (err) {

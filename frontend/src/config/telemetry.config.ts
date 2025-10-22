@@ -1,22 +1,4 @@
 /**
- * 遙測數據默認配置
- */
-export const TELEMETRY_CONFIG = {
-  DEFAULT_YEAR: 2025,
-  MIN_YEAR: 2018,
-  MAX_YEAR: 2025,
-} as const;
-
-/**
- * 有效圈速過濾規則
- */
-export const LAP_FILTER_RULES = {
-  EXCLUDE_FIRST_LAP: true,
-  EXCLUDE_LAST_LAP: true,
-  REQUIRE_DURATION: true,
-} as const;
-
-/**
  * 根據規則過濾有效圈速
  */
 export const filterValidLaps = (laps: any[]): any[] => {

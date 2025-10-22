@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { StandingsLayout } from "@/layouts/Standings";
+import { StandingsLayout } from "@/layouts/StandingsLayout";
 import { DriverPointsChart } from "@/components/standings/DriverPointsChart";
 import { TeamPointsChart } from "@/components/standings/TeamPointsChart";
 import { PositionBoxPlot } from "@/components/standings/PositionBoxPlot";
-import { StandingsService } from "@/services/standings";
-import { SeasonData } from "@/types/standings";
+import { StandingsService } from "@/services/standing";
+import { SeasonStanding } from "@/types/Openf1API/standings";
 
 const CACHE_KEY = "seasonDataCache";
 const CACHE_EXPIRY_HOURS = 6;
 
 export const StandingsPage: React.FC = () => {
-  const [data, setData] = useState<SeasonData[] | null>(null);
+  const [data, setData] = useState<SeasonStanding[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const currentYear = new Date().getFullYear();
@@ -25,7 +25,7 @@ export const StandingsPage: React.FC = () => {
         if (cached) {
           const parsed = JSON.parse(cached) as {
             timestamp: number;
-            data: SeasonData[];
+            data: SeasonStanding[];
           };
           const ageHours = (Date.now() - parsed.timestamp) / 1000 / 3600;
           if (ageHours < CACHE_EXPIRY_HOURS) {
@@ -36,7 +36,7 @@ export const StandingsPage: React.FC = () => {
         }
 
         const seasonData =
-          await StandingsService.getDriverStanding(currentYear);
+          await StandingsService.getDriverStandings(currentYear);
         setData(seasonData);
 
         localStorage.setItem(

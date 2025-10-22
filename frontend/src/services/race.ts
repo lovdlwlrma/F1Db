@@ -1,16 +1,19 @@
-import { ScheduleData } from "@/types/race";
+import { NextRaceApiResponse, ScheduleData } from "@/types/race";
+import { baseApiClient } from "./baseApiClient";
 
-// 後端回傳的格式
 interface BackendApiResponse {
   count: number;
-  data: { [key: string]: any }; // data 是物件不是陣列
+  data: { [key: string]: any };
   message: string;
 }
 
-export class ScheduleService {
-  // 使用你的後端 API
-  private static readonly BASE_URL = "http://localhost:8080/api/v1"; // 改成你的後端路徑
+export class RaceService extends baseApiClient {
+  // ========== Next Race ==========
+  static async getNextRace(): Promise<NextRaceApiResponse> {
+    return this.fetchData<NextRaceApiResponse>(this.getUrl("/race/next"));
+  }
 
+  // ========== Schedule ==========
   static async getSchedule(year: number): Promise<ScheduleData> {
     try {
       console.log("Fetching schedule for year:", year);
@@ -18,7 +21,7 @@ export class ScheduleService {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-      const response = await fetch(`${this.BASE_URL}/race/all`, {
+      const response = await fetch(this.getUrl("/race/all"), {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -29,7 +32,6 @@ export class ScheduleService {
       clearTimeout(timeoutId);
 
       console.log("Response status:", response.status);
-      console.log("Response ok:", response.ok);
 
       if (!response.ok) {
         throw new Error(
@@ -53,7 +55,7 @@ export class ScheduleService {
         races: racesArray,
       };
     } catch (error) {
-      console.error("Error in ScheduleService.getSchedule:", error);
+      console.error("Error in RaceService.getSchedule:", error);
       if (error instanceof Error) {
         console.error("Error name:", error.name);
         console.error("Error message:", error.message);

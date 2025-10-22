@@ -1,12 +1,12 @@
 // pages/Telemetry.tsx
 import React, { useEffect } from "react";
 import TelemetryLayout from "@/layouts/TelemetryLayout";
-import { useMeetings } from "@/hooks/useMeetings";
-import { useSessions } from "@/hooks/useSessions";
-import { useDrivers } from "@/hooks/useDrivers";
-import { useDriverTelemetry } from "@/hooks/useDriverTelemetry";
+import { useMeetingsByYear } from "@/hooks/useMeetingsbyYear";
+import { useSessionsByMeeting } from "@/hooks/useSessionsByMeeting";
+import { useDriversBySession } from "@/hooks/useDriversbySession";
+import { useTelemetry } from "@/hooks/useTelemetry";
 import { useTelemetrySelection } from "@/hooks/useTelemetrySelection";
-import { TELEMETRY_CONFIG } from "@/config/telemetry.config";
+import { COMMON_CONFIG } from "@/config/common.config";
 
 const Telemetry: React.FC = () => {
   // 用戶選擇狀態
@@ -18,49 +18,50 @@ const Telemetry: React.FC = () => {
     setSelectedDriver1,
     setSelectedDriver2,
     resetDriverSelections,
-  } = useTelemetrySelection(TELEMETRY_CONFIG.DEFAULT_YEAR);
+  } = useTelemetrySelection(COMMON_CONFIG.DEFAULT_YEAR);
 
-  // 會議數據
+  // Meeting
   const {
     meetings,
     selectedMeeting,
     loading: meetingsLoading,
     setSelectedMeeting,
-  } = useMeetings(year);
+  } = useMeetingsByYear(year);
 
-  // 會話數據
+  // Session
   const {
     sessions,
     selectedSession,
     loading: sessionsLoading,
     setSelectedSession,
-  } = useSessions(selectedMeeting?.meeting_key ?? null);
+  } = useSessionsByMeeting(selectedMeeting?.meeting_key ?? null);
 
-  // 車手列表
-  const { drivers: availableDrivers, loading: driversLoading } = useDrivers(
-    selectedSession?.session_key ?? null,
-  );
+  // Driver
+  const { drivers: availableDrivers, loading: driversLoading } =
+    useDriversBySession({
+      sessionKey: selectedSession?.session_key ?? null,
+    });
 
-  // Driver 1 遙測數據
+  // Driver 1 Telemetry
   const {
     laps: laps1,
     selectedLap: selectedLap1,
     telemetryData: telemetryData1,
     loading: telemetry1Loading,
     setSelectedLap: setSelectedLap1,
-  } = useDriverTelemetry({
+  } = useTelemetry({
     sessionKey: selectedSession?.session_key ?? null,
     driverNumber: selectedDriver1?.driver_number ?? null,
   });
 
-  // Driver 2 遙測數據
+  // Driver 2 Telemetry
   const {
     laps: laps2,
     selectedLap: selectedLap2,
     telemetryData: telemetryData2,
     loading: telemetry2Loading,
     setSelectedLap: setSelectedLap2,
-  } = useDriverTelemetry({
+  } = useTelemetry({
     sessionKey: selectedSession?.session_key ?? null,
     driverNumber: selectedDriver2?.driver_number ?? null,
   });

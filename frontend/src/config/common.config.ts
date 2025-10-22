@@ -1,0 +1,16 @@
+export const COMMON_CONFIG = {
+  DEFAULT_YEAR: 2025,
+  RETRY: {
+    ATTEMPTS: 3,
+    DELAY: 1500,
+  },
+};
+
+export const ANALYTICS_CONFIG = {
+  SESSION_TYPE: "Race",
+  CHART_CONFIG: {
+    LAP_RANKING_HEIGHT: 600,
+    TYRE_STINTS_HEIGHT: 600,
+    RACE_CONTROL_HEIGHT: 640,
+  },
+} as const;

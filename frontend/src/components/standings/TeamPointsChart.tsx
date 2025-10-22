@@ -9,10 +9,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Trophy } from "lucide-react";
-import { SeasonData } from "@/types/standings";
+import { SeasonStanding } from "@/types/Openf1API/standings";
 
 interface TeamPointsChartProps {
-  data: SeasonData;
+  data: SeasonStanding;
 }
 
 export const TeamPointsChart: React.FC<TeamPointsChartProps> = ({ data }) => {

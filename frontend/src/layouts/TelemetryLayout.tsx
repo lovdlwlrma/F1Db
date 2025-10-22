@@ -1,4 +1,3 @@
-// layouts/TelemetryLayout.tsx
 import React from "react";
 import SelectBar from "@/components/telemetry/SelectBar";
 import TelemetryChart from "@/components/telemetry/TelemetryChart";

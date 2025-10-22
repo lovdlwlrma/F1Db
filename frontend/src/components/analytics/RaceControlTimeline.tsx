@@ -150,8 +150,11 @@ const RaceControlTimeline: React.FC<RaceControlTimelineProps> = ({
         style={{ height: `${height - 150}px` }}
       >
         <div className="space-y-4">
-          {sortedControls.map((control) => (
-            <div className="relative flex items-start gap-9 group">
+          {sortedControls.map((control, index) => (
+            <div
+              key={`${control.date}-${index}`}
+              className="relative flex items-start gap-9 group"
+            >
               {/* 左側彩色條 */}
               <div
                 className={`absolute left-16 top-0 bottom-0 w-1 rounded ${isInvestigation(control.message) ? "bg-pink-600" : getCategoryColor(control.category, control.flag, control.message).split(" ")[0]}`}

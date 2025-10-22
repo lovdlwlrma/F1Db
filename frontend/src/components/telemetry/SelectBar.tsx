@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Driver } from "@/types/Openf1API/drivers"
+import { Driver } from "@/types/Openf1API/drivers";
 import { Lap } from "@/types/Openf1API/laps";
 
 interface Props {

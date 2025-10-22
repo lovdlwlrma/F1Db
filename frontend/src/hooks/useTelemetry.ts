@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
-import { TelemetryService } from "@/services/telemetry";
+import { OpenF1 } from "@/services/Openf1API";
 import { Lap } from "@/types/Openf1API/laps";
 import { TelemetryData } from "@/types/Openf1API/telemetry";
 import { findFastestLap } from "@/config/telemetry.config";
+import { COMMON_CONFIG } from "@/config/common.config";
+import { withRetry } from "@/utils/retry";
+
+const cache: { [key: string]: TelemetryData[] } = {};
 
 interface UseDriverTelemetryParams {
   sessionKey: number | null;
@@ -14,11 +18,11 @@ interface UseDriverTelemetryReturn {
   selectedLap: Lap | null;
   telemetryData: TelemetryData[];
   loading: boolean;
-  error: string | null;
+  error: Error | null;
   setSelectedLap: (lap: Lap | null) => void;
 }
 
-export const useDriverTelemetry = ({
+export const useTelemetry = ({
   sessionKey,
   driverNumber,
 }: UseDriverTelemetryParams): UseDriverTelemetryReturn => {
@@ -26,7 +30,7 @@ export const useDriverTelemetry = ({
   const [selectedLap, setSelectedLap] = useState<Lap | null>(null);
   const [telemetryData, setTelemetryData] = useState<TelemetryData[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   // 獲取圈速數據
   useEffect(() => {
@@ -44,7 +48,7 @@ export const useDriverTelemetry = ({
       setTelemetryData([]);
 
       try {
-        const lapData = await TelemetryService.getLaps(
+        const lapData = await OpenF1.LapsService.getLaps(
           sessionKey,
           driverNumber,
         );
@@ -55,7 +59,7 @@ export const useDriverTelemetry = ({
         setSelectedLap(fastestLap);
       } catch (err) {
         console.error("Failed to fetch laps:", err);
-        setError("Failed to load lap data");
+        setError(err instanceof Error ? err : new Error("Unknown error"));
       } finally {
         setLoading(false);
       }
@@ -72,19 +76,39 @@ export const useDriverTelemetry = ({
     }
 
     const fetchTelemetry = async () => {
+      const cacheKey = `${sessionKey}-${driverNumber}-${selectedLap.lap_number}`;
       setLoading(true);
       setError(null);
 
       try {
-        const carData = await TelemetryService.getTelemetry(
-          sessionKey,
-          driverNumber,
-          selectedLap.lap_number,
-        );
-        setTelemetryData(carData.TelemetryData ?? []);
+        let carData =
+          cache[cacheKey] ??
+          (await withRetry(
+            () =>
+              OpenF1.TelemetryService.getTelemetry(
+                sessionKey,
+                driverNumber,
+                selectedLap.lap_number,
+              ),
+            COMMON_CONFIG.RETRY.ATTEMPTS,
+            COMMON_CONFIG.RETRY.DELAY,
+          ));
+
+        let telemetryArray: TelemetryData[] = [];
+        if (carData && Array.isArray((carData as any).TelemetryData)) {
+          telemetryArray = (carData as any).TelemetryData;
+        } else if (Array.isArray(carData)) {
+          telemetryArray = carData;
+        } else {
+          console.warn("Unexpected telemetry format:", carData);
+        }
+
+        cache[cacheKey] = telemetryArray;
+        setTelemetryData(telemetryArray);
       } catch (err) {
         console.error("Failed to fetch telemetry:", err);
-        setError("Failed to load telemetry data");
+        setError(err instanceof Error ? err : new Error("Unknown error"));
+        setTelemetryData([]);
       } finally {
         setLoading(false);
       }

@@ -3,7 +3,7 @@ import { Driver } from "@/types/Openf1API/drivers";
 import { RaceResult } from "@/types/Openf1API/result";
 import { Positions } from "@/types/Openf1API/positions";
 import { TeamStats } from "@/types/analytics";
-import { Trophy, Clock, Award, TrendingUp } from "lucide-react";
+import { Trophy, Clock, Award, TrendingUp, AlertCircle } from "lucide-react";
 
 const POINTS: number[] = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
 
@@ -156,6 +156,28 @@ export default function RaceStatisticsTable({
     return "bg-green-500/20 text-green-400";
   };
 
+  // 檢查是否有資料
+  const hasData = drivers.length > 0 && results.length > 0;
+
+  // 空資料狀態
+  if (!hasData) {
+    return (
+      <div className="bg-gray-900/95 backdrop-blur-sm rounded-2xl p-12 border border-gray-700/50">
+        <div className="flex flex-col items-center justify-center text-center space-y-4">
+          <AlertCircle className="w-16 h-16 text-gray-500" />
+          <h3 className="text-xl font-semibold text-white">
+            No Race Results Available
+          </h3>
+          <p className="text-gray-400 max-w-md">
+            Race results will be available some time after the race has
+            finished. The chart may currently contain slight inaccuracies.
+            Please select a different Grand Prix or check back later.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-gray-900/95 backdrop-blur-sm rounded-2xl p-6 space-y-8 border border-gray-700/50">
       <div className="grid lg:grid-cols-3 gap-8 items-start">
@@ -166,48 +188,54 @@ export default function RaceStatisticsTable({
             Podium
           </div>
 
-          <div className="space-y-3">
-            {podiumDrivers.map((result, index) => {
-              const positions = ["🥇", "🥈", "🥉"];
-              const bgGradients = [
-                "from-yellow-500/20 to-yellow-600/10",
-                "from-gray-400/20 to-gray-500/10",
-                "from-amber-600/20 to-amber-700/10",
-              ];
+          {podiumDrivers.length > 0 ? (
+            <div className="space-y-3">
+              {podiumDrivers.map((result, index) => {
+                const positions = ["🥇", "🥈", "🥉"];
+                const bgGradients = [
+                  "from-yellow-500/20 to-yellow-600/10",
+                  "from-gray-400/20 to-gray-500/10",
+                  "from-amber-600/20 to-amber-700/10",
+                ];
 
-              return (
-                <div
-                  key={result.driver_number}
-                  className={`bg-gradient-to-r ${bgGradients[index]} border border-gray-600/50 rounded-xl p-4 hover:scale-105 transition-transform`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-left">
-                      <span className="text-3xl">{positions[index]}</span>
-                      <div>
-                        <div className="font-semibold text-white">
-                          {result.driver?.full_name}
-                        </div>
-                        <div
-                          className="text-sm font-medium"
-                          style={{ color: `#${result.driver?.team_colour}` }}
-                        >
-                          {result.driver?.team_name}
+                return (
+                  <div
+                    key={result.driver_number}
+                    className={`bg-gradient-to-r ${bgGradients[index]} border border-gray-600/50 rounded-xl p-4 hover:scale-105 transition-transform`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3 text-left">
+                        <span className="text-3xl">{positions[index]}</span>
+                        <div>
+                          <div className="font-semibold text-white">
+                            {result.driver?.full_name}
+                          </div>
+                          <div
+                            className="text-sm font-medium"
+                            style={{ color: `#${result.driver?.team_colour}` }}
+                          >
+                            {result.driver?.team_name}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-white">
-                        P{result.position}
-                      </div>
-                      <div className="text-sm text-gray-400">
-                        {result.points} points
+                      <div className="text-right">
+                        <div className="text-lg font-bold text-white">
+                          P{result.position}
+                        </div>
+                        <div className="text-sm text-gray-400">
+                          {result.points} points
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="bg-gray-800/60 border border-gray-600/50 rounded-xl p-6 text-center">
+              <p className="text-gray-400">Podium data not available yet</p>
+            </div>
+          )}
 
           {/* 比賽統計 */}
           <div className="space-y-4 mt-8">
@@ -278,54 +306,60 @@ export default function RaceStatisticsTable({
             Team Points
           </div>
 
-          <div className="space-y-3">
-            {teamStats.slice(0, 5).map((team, index) => (
-              <div
-                key={team.teamName}
-                className="bg-gray-800/60 border border-gray-600/50 rounded-xl p-4 hover:bg-gray-800/80 transition-colors"
-                style={{ padding: "1.2rem" }}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="text-lg font-bold text-gray-400">
-                      #{index + 1}
-                    </div>
-                    <div>
-                      <div
-                        className="font-semibold"
-                        style={{ color: `#${team.teamColor}` }}
-                      >
-                        {team.teamName}
+          {teamStats.length > 0 ? (
+            <div className="space-y-3">
+              {teamStats.slice(0, 5).map((team, index) => (
+                <div
+                  key={team.teamName}
+                  className="bg-gray-800/60 border border-gray-600/50 rounded-xl p-4 hover:bg-gray-800/80 transition-colors"
+                  style={{ padding: "1.2rem" }}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="text-lg font-bold text-gray-400">
+                        #{index + 1}
+                      </div>
+                      <div>
+                        <div
+                          className="font-semibold"
+                          style={{ color: `#${team.teamColor}` }}
+                        >
+                          {team.teamName}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="text-xl font-bold text-white">
-                    {team.points} points
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  {team.drivers.map((driver, driverIndex) => (
-                    <div
-                      key={driverIndex}
-                      className="flex justify-between text-sm"
-                    >
-                      <span className="text-gray-300">{driver.name}</span>
-                      <span className="text-gray-400">
-                        {driver.dnf && " DNF"} {driver.dns && " DNS"}{" "}
-                        {driver.dsq && " DSQ"}
-                        {driver.position !== undefined &&
-                        driver.position !== null
-                          ? `P${driver.position}`
-                          : ""}{" "}
-                        ({driver.points} points)
-                      </span>
+                    <div className="text-xl font-bold text-white">
+                      {team.points} points
                     </div>
-                  ))}
+                  </div>
+
+                  <div className="space-y-1">
+                    {team.drivers.map((driver) => (
+                      <div
+                        key={`${team.teamName}-${driver.driverNumber}`}
+                        className="flex justify-between text-sm"
+                      >
+                        <span className="text-gray-300">{driver.name}</span>
+                        <span className="text-gray-400">
+                          {driver.dnf && " DNF"} {driver.dns && " DNS"}{" "}
+                          {driver.dsq && " DSQ"}
+                          {driver.position !== undefined &&
+                          driver.position !== null
+                            ? `P${driver.position}`
+                            : ""}{" "}
+                          ({driver.points} points)
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-gray-800/60 border border-gray-600/50 rounded-xl p-6 text-center">
+              <p className="text-gray-400">Team standings not available yet</p>
+            </div>
+          )}
         </div>
 
         {/* 右側：車手完賽詳情 */}
@@ -335,61 +369,67 @@ export default function RaceStatisticsTable({
             Finishers Details
           </div>
 
-          <div className="bg-gray-800/60 border border-gray-600/50 rounded-xl p-4 flex-1">
-            <div className="space-y-2">
-              {validResults
-                .sort((a, b) => {
-                  const posA = a.position;
-                  const posB = b.position;
+          {validResults.length > 0 ? (
+            <div className="bg-gray-800/60 border border-gray-600/50 rounded-xl p-4 flex-1">
+              <div className="space-y-2">
+                {validResults
+                  .sort((a, b) => {
+                    const posA = a.position;
+                    const posB = b.position;
 
-                  if (posA == null && posB == null) return 0;
-                  if (posA == null) return 1;
-                  if (posB == null) return -1;
+                    if (posA == null && posB == null) return 0;
+                    if (posA == null) return 1;
+                    if (posB == null) return -1;
 
-                  return posA - posB;
-                })
-                .map((result) => {
-                  const driver = driverMap[result.driver_number];
-                  if (!driver) return null;
+                    return posA - posB;
+                  })
+                  .map((result) => {
+                    const driver = driverMap[result.driver_number];
+                    if (!driver) return null;
 
-                  const points = getDriverPoints(
-                    result.position,
-                    result.dnf,
-                    result.dns,
-                    result.dsq,
-                  );
+                    const points = getDriverPoints(
+                      result.position,
+                      result.dnf,
+                      result.dns,
+                      result.dsq,
+                    );
 
-                  return (
-                    <div
-                      key={result.driver_number}
-                      className="flex items-center justify-between text-sm"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="w-6 text-center text-gray-400">
-                          {result.position != null
-                            ? `P${result.position}`
-                            : `${result.dnf ? "" : result.dns ? "" : result.dsq ? "" : "Finished"}`}
-                        </span>
-                        <span
-                          className="text-m font-medium px-2"
-                          style={{ color: `#${driver.team_colour}` }}
-                        >
-                          {driver.full_name}
-                        </span>
+                    return (
+                      <div
+                        key={result.driver_number}
+                        className="flex items-center justify-between text-sm"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="w-6 text-center text-gray-400">
+                            {result.position != null
+                              ? `P${result.position}`
+                              : `${result.dnf ? "" : result.dns ? "" : result.dsq ? "" : "Finished"}`}
+                          </span>
+                          <span
+                            className="text-m font-medium px-2"
+                            style={{ color: `#${driver.team_colour}` }}
+                          >
+                            {driver.full_name}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-gray-300">{points} points</span>
+                          <span
+                            className={`px-2 py-1 rounded text-xs ${getStatusColor(result)} w-16`}
+                          >
+                            {getStatusText(result)}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-gray-300">{points} points</span>
-                        <span
-                          className={`px-2 py-1 rounded text-xs ${getStatusColor(result)} w-16`}
-                        >
-                          {getStatusText(result)}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="bg-gray-800/60 border border-gray-600/50 rounded-xl p-6 text-center">
+              <p className="text-gray-400">Race results not available yet</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
