@@ -5,48 +5,48 @@ import { withRetry } from "@/utils/retry";
 import { COMMON_CONFIG } from "@/config/config";
 
 interface UseRaceControlBySessionProps {
-	sessionKey: number | null;
+  sessionKey: number | null;
 }
 
 const cache: { [sessionKey: number]: RaceControl[] } = {};
 
 export const useRaceControlBySession = ({
-	sessionKey,
+  sessionKey,
 }: UseRaceControlBySessionProps) => {
-	const [raceControls, setRaceControls] = useState<RaceControl[]>([]);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<Error | null>(null);
+  const [raceControls, setRaceControls] = useState<RaceControl[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-	useEffect(() => {
-		if (!sessionKey) {
-			setRaceControls([]);
-			return;
-		}
+  useEffect(() => {
+    if (!sessionKey) {
+      setRaceControls([]);
+      return;
+    }
 
-		const fetchRaceControl = async () => {
-			setLoading(true);
-			setError(null);
-			try {
-				const data =
-					cache[sessionKey] ??
-					(await withRetry(
-						() => OpenF1Service.getRaceControlbySession(sessionKey),
-						COMMON_CONFIG.RETRY.ATTEMPTS,
-						COMMON_CONFIG.RETRY.DELAY
-					));
+    const fetchRaceControl = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data =
+          cache[sessionKey] ??
+          (await withRetry(
+            () => OpenF1Service.getRaceControlbySession(sessionKey),
+            COMMON_CONFIG.RETRY.ATTEMPTS,
+            COMMON_CONFIG.RETRY.DELAY,
+          ));
 
-				cache[sessionKey] = data;
-				setRaceControls(data);
-			} catch (err) {
-				console.error("Failed to fetch race control by session:", err);
-				setError(err instanceof Error ? err : new Error("Unknown error"));
-			} finally {
-				setLoading(false);
-			}
-		};
+        cache[sessionKey] = data;
+        setRaceControls(data);
+      } catch (err) {
+        console.error("Failed to fetch race control by session:", err);
+        setError(err instanceof Error ? err : new Error("Unknown error"));
+      } finally {
+        setLoading(false);
+      }
+    };
 
-		fetchRaceControl();
-	}, [sessionKey]);
+    fetchRaceControl();
+  }, [sessionKey]);
 
-	return { raceControls, loading, error };
+  return { raceControls, loading, error };
 };

@@ -7,35 +7,35 @@ import { COMMON_CONFIG } from "@/config/config";
 let cache: Driver[] | null = null;
 
 export const useDriversByLatest = () => {
-	const [drivers, setDrivers] = useState<Driver[]>([]);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<Error | null>(null);
+  const [drivers, setDrivers] = useState<Driver[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-	useEffect(() => {
-		const fetchDrivers = async () => {
-			setLoading(true);
-			setError(null);
-			try {
-				const data =
-					cache ??
-					(await withRetry(
-						() => OpenF1Service.getDriversbyLatest(),
-						COMMON_CONFIG.RETRY.ATTEMPTS,
-						COMMON_CONFIG.RETRY.DELAY
-					));
+  useEffect(() => {
+    const fetchDrivers = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data =
+          cache ??
+          (await withRetry(
+            () => OpenF1Service.getDriversbyLatest(),
+            COMMON_CONFIG.RETRY.ATTEMPTS,
+            COMMON_CONFIG.RETRY.DELAY,
+          ));
 
-				cache = data;
-				setDrivers(data);
-			} catch (err) {
-				console.error("Failed to fetch latest drivers:", err);
-				setError(err instanceof Error ? err : new Error("Unknown error"));
-			} finally {
-				setLoading(false);
-			}
-		};
+        cache = data;
+        setDrivers(data);
+      } catch (err) {
+        console.error("Failed to fetch latest drivers:", err);
+        setError(err instanceof Error ? err : new Error("Unknown error"));
+      } finally {
+        setLoading(false);
+      }
+    };
 
-		fetchDrivers();
-	}, []);
+    fetchDrivers();
+  }, []);
 
-	return { drivers, loading, error };
+  return { drivers, loading, error };
 };
