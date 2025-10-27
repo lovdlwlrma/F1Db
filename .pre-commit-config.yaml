@@ -5,4 +5,4 @@ repos:
         name: Run make fmt before commit
         entry: make fmt
         language: system
-        stages: [commit]
+        always_run: true
