@@ -14,3 +14,11 @@ export const ANALYTICS_CONFIG = {
     RACE_CONTROL_HEIGHT: 640,
   },
 } as const;
+
+export const SSE_CONNECTION_CONFIG = {
+  maxRetries: 5,
+  initialRetryDelay: 1000,
+  maxRetryDelay: 30000,
+  retryMultiplier: 2,
+  debug: false,
+} as const;

@@ -4,6 +4,7 @@ import Telemetry from "@/pages/Telemetry";
 import Analytics from "@/pages/Analytics";
 import Standings from "@/pages/Standings";
 import Schedule from "@/pages/Schedule";
+import LiveTiming from "@/pages/LiveTiming";
 
 export interface NavigationRoute {
   name: string;
@@ -29,7 +30,7 @@ export const NAVIGATION_ROUTES: NavigationRoute[] = [
     name: "Live Timing",
     path: "/live-timing",
     urlSegment: "live-timing",
-    component: Telemetry, // Temporary use Telemetry component
+    component: LiveTiming,
   },
   {
     name: "Analytics",

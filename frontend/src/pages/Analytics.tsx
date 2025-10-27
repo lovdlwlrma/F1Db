@@ -1,13 +1,12 @@
-// pages/AnalyticsPage.tsx
 import React, { useState, useEffect } from "react";
 import AnalyticsLayout from "@/layouts/AnalyticsLayout";
-import { useMeetingsByYear } from "@/hooks/useMeetingsbyYear";
+import { useMeetingsByYear } from "@/hooks/useMeetingsByYear";
 import { useSessionsByMeeting } from "@/hooks/useSessionsByMeeting";
-import { useDriversBySession } from "@/hooks/useDriversbySession";
-import { usePositionsBySession } from "@/hooks/usePositionbySession";
+import { useDriversBySession } from "@/hooks/useDriversBySession";
+import { usePositionsBySession } from "@/hooks/usePositionBySession";
 import { useStintsBySession } from "@/hooks/useStintsBySession";
 import { useResultBySession } from "@/hooks/useResultBySession";
-import { useRaceControlBySession } from "@/hooks/useRaceControlbySession";
+import { useRaceControlBySession } from "@/hooks/useRaceControlBySession";
 import { COMMON_CONFIG, ANALYTICS_CONFIG } from "@/config/config";
 
 const AnalyticsPage: React.FC = () => {

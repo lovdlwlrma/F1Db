@@ -1,9 +1,8 @@
-// pages/Telemetry.tsx
 import React, { useEffect } from "react";
 import TelemetryLayout from "@/layouts/TelemetryLayout";
-import { useMeetingsByYear } from "@/hooks/useMeetingsbyYear";
+import { useMeetingsByYear } from "@/hooks/useMeetingsByYear";
 import { useSessionsByMeeting } from "@/hooks/useSessionsByMeeting";
-import { useDriversBySession } from "@/hooks/useDriversbySession";
+import { useDriversBySession } from "@/hooks/useDriversBySession";
 import { useTelemetry } from "@/hooks/useTelemetry";
 import { useTelemetrySelection } from "@/hooks/useTelemetrySelection";
 import { COMMON_CONFIG } from "@/config/config";

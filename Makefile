@@ -14,7 +14,7 @@ run:
 		--prefix-colors "yellow,cyan" \
 		--kill-others \
 		--kill-others-on-fail \
-		"cd frontend && npm run dev" \
+		"cd frontend && npm start" \
 		"cd backend && go run cmd/server/main.go"
 
 deps:

@@ -1,4 +1,3 @@
-// pages/Schedule.tsx
 import React from "react";
 import { useSchedule } from "@/hooks/useSchedule";
 import { ScheduleLayout } from "@/layouts/ScheduleLayout";
