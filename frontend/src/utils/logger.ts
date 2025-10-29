@@ -15,10 +15,17 @@ async function sendLogToTerminal(
       )
       .join(" ");
 
+    const logObject = {
+      level,
+      timestamp: timestampWithOffset(),
+      caller,
+      message,
+    };
+
     await fetch("/__log", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ level, message, caller }),
+      body: JSON.stringify(logObject),
     });
   } catch {
     // 若無法連線就忽略
@@ -80,4 +87,23 @@ export function setupFrontendLogger() {
   console.log(
     "logger enabled: log/warn/error are being forwarded to terminal.",
   );
+}
+
+function timestampWithOffset(date: Date = new Date()): string {
+  const pad = (n: number, z = 2) => n.toString().padStart(z, "0");
+
+  const tzOffset = -date.getTimezoneOffset();
+  const sign = tzOffset >= 0 ? "+" : "-";
+  const offsetH = pad(Math.floor(Math.abs(tzOffset) / 60));
+  const offsetM = pad(Math.abs(tzOffset) % 60);
+
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  const seconds = pad(date.getSeconds());
+  const ms = pad(date.getMilliseconds(), 3);
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${ms}${sign}${offsetH}${offsetM}`;
 }

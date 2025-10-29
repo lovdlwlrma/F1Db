@@ -76,7 +76,7 @@ const TelemetryLayout: React.FC<TelemetryLayoutProps> = ({
   }
 
   return (
-    <div className="p-4">
+    <div className="p-8">
       <SelectBar
         year={year}
         setYear={setYear}

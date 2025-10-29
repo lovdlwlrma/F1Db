@@ -19,6 +19,7 @@ export default defineConfig({
 							const parsed = JSON.parse(body);
 							const level: string = parsed.level ?? "INFO";
 							const message: string = parsed.message ?? "";
+							const timestamp: string = parsed.timestamp ?? "";
 							const caller: string = parsed.caller ?? "unknown";
 							const shortcut = caller.includes("/src/")
 								? caller.slice(caller.indexOf("/src/"))
@@ -26,7 +27,7 @@ export default defineConfig({
 
 							const logObject = {
 								level: level.toUpperCase(),
-								timestamp: new Date().toISOString(),
+								timestamp: timestamp,
 								caller: shortcut,
 								msg: message,
 							};

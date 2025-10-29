@@ -5,7 +5,7 @@ interface OverviewLayoutProps {
 }
 
 const OverviewLayout: React.FC<OverviewLayoutProps> = ({ children }) => {
-  return <div className="min-h-screen bg-black text-white">{children}</div>;
+  return <div className="min-h-screen bg-black text-white p-8">{children}</div>;
 };
 
 export default OverviewLayout;

@@ -1,4 +1,6 @@
-export interface DriverList {
+export type DriverList = Record<string, DriverInfo>;
+
+export interface DriverInfo {
   BroadcastName: string;
   FirstName: string;
   FullName: string;

@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   LayoutDashboard,
   BarChart3,
@@ -131,48 +130,6 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         ))}
       </nav>
-
-      <div
-        className={`
-          h-px bg-gradient-to-r from-red-500/60 via-red-400/80 to-red-500/60
-          transition-all duration-300 ease-in-out mx-2
-          ${open ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"}
-        `}
-      />
-
-      <div className="p-3">
-        <div className="flex items-center relative">
-          {/* Username */}
-          <div
-            className={`
-              text-sm font-medium text-gray-300
-              transition-all duration-300 ease-in-out
-              ${open ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 w-0 overflow-hidden"}
-              ${open ? "absolute left-4" : "absolute left-0"}
-            `}
-            style={{ fontFamily: "'Orbitron', sans-serif" }}
-          >
-            Racer123
-          </div>
-
-          {/* Avatar */}
-          <div className="flex-1 flex justify-end">
-            <Avatar
-              className={`
-                w-8 h-8 border border-red-500/40 shadow-md shadow-red-900/40
-                transition-all duration-300 ease-in-out
-                ${open ? "opacity-100 scale-100 -translate-x-5" : "opacity-100 scale-100 -translate-x-1"}
-              `}
-            >
-              <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-              <AvatarFallback className="bg-red-600/30 text-white">
-                R
-              </AvatarFallback>
-            </Avatar>
-          </div>
-        </div>
-      </div>
-
       <div className="absolute right-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-500/80 via-red-400 to-red-500/80 shadow-lg shadow-red-500/50" />
     </div>
   );

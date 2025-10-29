@@ -29,7 +29,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
           />
         }
       >
-        <main className="flex-1 p-4 transition-[padding] duration-700">
+        <main className="flex-1 transition-[padding] duration-700">
           <PageRouter activePage={activePage} />
         </main>
       </SidebarLayout>
