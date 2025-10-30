@@ -11,8 +11,6 @@ import (
 	"lovdlwlrma/backend/internal/server/routes"
 
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.uber.org/zap"
 )
 
@@ -38,9 +36,6 @@ func NewServer() *Server {
 	server := &Server{
 		router: router,
 	}
-
-	// Swagger
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// API 路由
 	api := router.Group("/api/v1")

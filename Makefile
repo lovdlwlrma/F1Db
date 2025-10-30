@@ -15,7 +15,7 @@ run:
 		--kill-others \
 		--kill-others-on-fail \
 		"cd frontend && npm start" \
-		"cd backend && go run cmd/server/main.go"
+		"cd backend && go run cmd/main.go"
 
 deps:
 	@echo "$(BLUE)Installing backend dependencies...$(NC)"
@@ -25,7 +25,7 @@ deps:
 
 build:
 	@echo "$(BLUE)Building backend service...$(NC)"
-	cd backend && CGO_ENABLED=0 go build -o build/server cmd/server/main.go
+	cd backend && CGO_ENABLED=0 go build -o build/server cmd/main.go
 	@echo "$(BLUE)Building frontend service...$(NC)"
 	cd frontend && npm run build
 
@@ -34,6 +34,22 @@ fmt:
 	cd backend && go fmt ./...
 	@echo "$(BLUE)Formatting frontend code...$(NC)"
 	cd frontend && npm run format
+
+compose-build:
+	@echo "$(GREEN)Building all services using Docker Compose...$(NC)"
+	docker-compose build
+
+compose-up:
+	@echo "$(GREEN)Starting all services using Docker Compose...$(NC)"
+	docker-compose up -d
+
+compose-down:
+	@echo "$(RED)Stopping all services using Docker Compose...$(NC)"
+	docker-compose down
+
+compose-stop:
+	@echo "$(RED)Stopping all services using Docker Compose...$(NC)"
+	docker-compose stop
 
 help:
 	@echo "\n$(GREEN)Available commands:$(NC)"

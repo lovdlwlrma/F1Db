@@ -1,14 +1,8 @@
 import "./styles/App.css";
-import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { setupFrontendLogger } from "@/utils/logger";
 import Main from "@/pages/Main";
 
 function App() {
-  useEffect(() => {
-    setupFrontendLogger();
-  }, []);
-
   return (
     <div className="App">
       <Routes>

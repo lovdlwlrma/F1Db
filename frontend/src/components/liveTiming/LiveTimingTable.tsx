@@ -21,19 +21,19 @@ export const LiveTimingTable: React.FC<LiveTimingTableProps> = ({
         <thead className="bg-gray-800 text-gray-300 uppercase sticky top-0 text-[10px]">
           <tr>
             <th className="px-3 py-2 text-center w-12">Pos</th>
-            <th className="px-3 py-2 text-center w-16">Driver</th>
-            <th className="px-3 py-2 text-center w-22">Leader</th>
-            <th className="px-3 py-2 text-center w-22">Interval</th>
-            <th className="px-3 py-2 text-center w-22">Best Lap</th>
-            <th className="px-3 py-2 text-center w-22">Last Lap</th>
-            <th className="px-3 py-2 text-center w-22">Sector1</th>
-            <th className="px-3 py-2 text-center w-22">Sector2</th>
-            <th className="px-3 py-2 text-center w-22">Sector3</th>
+            <th className="px-3 py-2 text-center w-14">Driver</th>
+            <th className="px-3 py-2 text-center w-20">Leader</th>
+            <th className="px-3 py-2 text-center w-20">Interval</th>
+            <th className="px-3 py-2 text-center w-20">Best Lap</th>
+            <th className="px-3 py-2 text-center w-20">Last Lap</th>
+            <th className="px-3 py-2 text-center w-20">Sector1</th>
+            <th className="px-3 py-2 text-center w-20">Sector2</th>
+            <th className="px-3 py-2 text-center w-20">Sector3</th>
             <th className="px-3 py-2 text-center w-16">MiniSec1</th>
             <th className="px-3 py-2 text-center w-16">MiniSec2</th>
             <th className="px-3 py-2 text-center w-16">MiniSec3</th>
             <th className="px-3 py-2 text-center w-16">Tyre</th>
-            <th className="px-3 py-2 text-center w-16">Pits</th>
+            <th className="px-3 py-2 text-center w-12">Pits</th>
             <th className="px-3 py-2 text-center w-14">I1</th>
             <th className="px-3 py-2 text-center w-14">I2</th>
             <th className="px-3 py-2 text-center w-14">ST</th>
@@ -67,7 +67,7 @@ export const LiveTimingTable: React.FC<LiveTimingTableProps> = ({
                 {driver.intervalGap}
               </td>
               <td
-                className={`px-3 py-2 text-center font-mono font-bold leading-none ${
+                className={`px-3 py-2 text-center font-mono leading-none ${
                   lapTimeToSeconds(driver.bestLap ?? "") === fastestLap
                     ? "text-purple-400"
                     : "text-gray-300"

@@ -32,7 +32,7 @@ const CircuitMap: React.FC<CircuitMapProps> = ({ nextRace, loading }) => {
 
   const getCircuitImage = (grandPrixName: string) => {
     const country = grandPrixName.replace(/ Grand Prix$/i, "");
-    return `/src/assets/Circuit/${country}.avif`;
+    return `/Circuit/${country}.avif`;
   };
 
   return (
@@ -40,7 +40,7 @@ const CircuitMap: React.FC<CircuitMapProps> = ({ nextRace, loading }) => {
       <div className="relative aspect-[16/9] rounded-lg overflow-hidden mb-4 mt-4">
         <img
           src={getCircuitImage(nextRace.name)}
-          alt={`${nextRace.circuit.name} circuit map`}
+          alt={`${nextRace.name} circuit map`}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>

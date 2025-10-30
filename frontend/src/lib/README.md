@@ -1,1 +1,0 @@
-Contains shared utility functions, helpers, and reusable logic for the project

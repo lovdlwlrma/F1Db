@@ -1,8 +1,0 @@
-repos:
-  - repo: local
-    hooks:
-      - id: make-fmt
-        name: Formatting code via `make fmt` ...
-        entry: make fmt
-        language: system
-        always_run: true
