@@ -2,7 +2,7 @@
 
 F1Db is a full-stack web application for managing and visualizing Formula 1 data with a React frontend and Go backend API service.
 
-
+![Live Timing Dashboard](/frontend/src/assets/livetiming.png)
 
 ## Features
 
