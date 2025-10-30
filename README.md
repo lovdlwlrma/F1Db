@@ -112,8 +112,10 @@ Once the application is running, you can access it via:
 
 ### Option 1: Using localhost (Default)
 
-- Frontend: http://localhost
-- Backend API: http://localhost:8080
+```
+Frontend:       http://localhost/
+Backend API:    http://localhost:8080/
+```
 
 ### Option 2: Using Custom Domain (Recommended)
 Edit the /etc/hosts file to set up a custom domain:
