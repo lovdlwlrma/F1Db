@@ -179,7 +179,7 @@ export default function RaceStatisticsTable({
   }
 
   return (
-    <div className="bg-gray-900/95 backdrop-blur-sm rounded-2xl p-6 space-y-8 border border-gray-700/50">
+    <div className="bg-gray-900 rounded-2xl p-6 shadow-2xl border border-gray-700">
       <div className="grid lg:grid-cols-3 gap-8 items-start">
         {/* 左側：領獎台 + 比賽統計 */}
         <div className="flex flex-col h-full">
@@ -401,7 +401,7 @@ export default function RaceStatisticsTable({
                       >
                         <div className="flex items-center gap-2">
                           <span className="w-6 text-center text-gray-400">
-                            {result.position != null
+                            {result.position != null && result.position
                               ? `P${result.position}`
                               : `${result.dnf ? "" : result.dns ? "" : result.dsq ? "" : "Finished"}`}
                           </span>

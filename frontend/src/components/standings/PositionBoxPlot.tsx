@@ -28,7 +28,7 @@ export const PositionBoxPlot: React.FC<PositionBoxPlotProps> = ({ data }) => {
       const max = Math.max(...validPos);
 
       return {
-        name: driver.full_name,
+        name: driver.name_acronym,
         min,
         q1,
         median,
@@ -51,8 +51,8 @@ export const PositionBoxPlot: React.FC<PositionBoxPlotProps> = ({ data }) => {
 
   return (
     <div className="bg-gray-800/50 backdrop-blur rounded-2xl p-6 shadow-2xl border border-gray-700 relative">
-      <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-        <Target className="w-6 h-6 text-red-500" />
+      <h2 className="text-sm font-bold mb-4 -mt-1 flex items-center gap-2">
+        <Target className="text-red-500" />
         Driver Finish Position Distribution
       </h2>
 
@@ -60,7 +60,7 @@ export const PositionBoxPlot: React.FC<PositionBoxPlotProps> = ({ data }) => {
         {boxPlotData.map((driver) => (
           <div key={driver.name} className="relative">
             <div className="flex items-center gap-4 mb-2">
-              <span className="text-sm w-40">{driver.name}</span>
+              <span className="text-sm flex-[0.1]">{driver.name}</span>
               <div className="flex-1 relative h-7 bg-gray-700/30 rounded-lg">
                 <div
                   className="absolute h-full flex items-center"
@@ -108,7 +108,7 @@ export const PositionBoxPlot: React.FC<PositionBoxPlotProps> = ({ data }) => {
                   style={{ left: `${((10 - 1) / 19) * 100}%` }}
                 />
               </div>
-              <div className="text-sm text-gray-400 w-32">
+              <div className="text-sm text-gray-400 flex-[0.22] text-right">
                 P{driver.min} - P{driver.max}
               </div>
             </div>

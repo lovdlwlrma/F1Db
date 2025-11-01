@@ -54,23 +54,26 @@ export const DriverPointsChart: React.FC<DriverPointsChartProps> = ({
   });
 
   return (
-    <div className="bg-gray-800/50 backdrop-blur rounded-2xl p-6 shadow-2xl border border-gray-700">
-      <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-        <TrendingUp className="w-6 h-6 text-red-500" />
+  <div className="bg-gray-800/50 backdrop-blur rounded-2xl shadow-2xl border border-gray-700">
+      <h2 className="text-sm font-bold flex items-center gap-2 -mt-3 ml-4">
+        <TrendingUp className="text-red-500" />
         Driver Standings Trend
       </h2>
-      <ResponsiveContainer width="100%" height={600}>
-        <LineChart data={chartData}>
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={chartData} margin={{ top: 10, left: -15, right: 15}}>
           <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
           <XAxis
             dataKey="race"
             stroke="#9CA3AF"
-            angle={-45}
+            angle={-30}
             textAnchor="end"
-            height={100}
+            height={50}
             tick={{ fontSize: 12, fill: "#9CA3AF" }}
           />
-          <YAxis stroke="#9CA3AF" />
+          <YAxis 
+            stroke="#9CA3AF"
+            tick={{ fontSize: 12, fill: "#9CA3AF" }}
+          />
           <Tooltip
             content={({ payload, label }) => {
               if (!payload || payload.length === 0) return null;
@@ -85,8 +88,8 @@ export const DriverPointsChart: React.FC<DriverPointsChartProps> = ({
                     backgroundColor: "#1F2937",
                     border: "1px solid #374151",
                     borderRadius: "8px",
-                    padding: "8px",
-                    fontSize: 12,
+                    padding: "6px",
+                    fontSize: 10,
                     color: "#9CA3AF",
                   }}
                 >
@@ -103,7 +106,7 @@ export const DriverPointsChart: React.FC<DriverPointsChartProps> = ({
                       }}
                     >
                       <span style={{ color: entry.color, marginRight: 4 }}>
-                        {entry.name}
+                        {entry.name}{" "}
                       </span>
                       <span>{entry.value}</span>
                     </div>

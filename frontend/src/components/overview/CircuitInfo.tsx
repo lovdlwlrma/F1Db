@@ -66,7 +66,7 @@ const CircuitInfo: React.FC<CircuitInfoProps> = ({ nextRace, loading }) => {
   ].filter((item) => item.value);
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-md rounded-lg p-4 shadow-lg border border-gray-700/40">
+    <div className="bg-gray-900 rounded-2xl p-4 shadow-2xl border border-gray-700">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {infoCards.map((item, idx) => {
           const Icon = item.icon!;

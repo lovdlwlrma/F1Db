@@ -36,7 +36,7 @@ const CircuitMap: React.FC<CircuitMapProps> = ({ nextRace, loading }) => {
   };
 
   return (
-    <div className="bg-gray-900 rounded-lg p-2">
+    <div className="bg-gray-900 rounded-lg">
       <div className="relative aspect-[16/9] rounded-lg overflow-hidden mb-4 mt-4">
         <img
           src={getCircuitImage(nextRace.name)}

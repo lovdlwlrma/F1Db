@@ -60,7 +60,7 @@ const TopBar: React.FC<TopBarProps> = ({ nextRace, loading }) => {
   const countryFlag = nextRace.country_flag_image_url;
 
   return (
-    <div className="bg-gradient-to-r from-gray-800/90 to-gray-900/90 backdrop-blur-sm border border-red-500/20 p-3 rounded-lg mb-2 shadow-lg">
+    <div className="bg-gray-900 rounded-2xl p-4 shadow-2xl border border-gray-700">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-8 pl-4">
           {countryFlag && (

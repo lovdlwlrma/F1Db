@@ -5,41 +5,57 @@ import { withRetry } from "@/utils/retry";
 import { COMMON_CONFIG } from "@/config/config";
 
 interface UseDriverStandingsProps {
-  year: number;
+	year: number;
 }
 
-const cache: { [year: number]: SeasonStanding[] } = {};
+const CACHE_KEY = "driverStandingsCache";
+const CACHE_EXPIRY_HOURS = 12;
 
 export const useDriverStandings = ({ year }: UseDriverStandingsProps) => {
-  const [standings, setStandings] = useState<SeasonStanding[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+	const [standings, setStandings] = useState<SeasonStanding[]>([]);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    const fetchStandings = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data =
-          cache[year] ??
-          (await withRetry(
-            () => OpenF1Service.getStandings(year),
-            COMMON_CONFIG.RETRY.ATTEMPTS,
-            COMMON_CONFIG.RETRY.DELAY,
-          ));
+	useEffect(() => {
+		const fetchStandings = async () => {
+			try {
+				setLoading(true);
+				setError(null);
 
-        cache[year] = data;
-        setStandings(data);
-      } catch (err) {
-        console.error("Failed to fetch driver standings:", err);
-        setError(err instanceof Error ? err : new Error("Unknown error"));
-      } finally {
-        setLoading(false);
-      }
-    };
+				const cached = localStorage.getItem(CACHE_KEY);
+				if (cached) {
+					const parsed = JSON.parse(cached) as {
+						timestamp: number;
+						data: SeasonStanding[];
+					};
+					const ageHours = (Date.now() - parsed.timestamp) / 1000 / 3600;
+					if (ageHours < CACHE_EXPIRY_HOURS) {
+						setStandings(parsed.data);
+						setLoading(false);
+						return;
+					}
+				}
 
-    fetchStandings();
-  }, [year]);
+				const data = await withRetry(
+					() => OpenF1Service.getStandings(year),
+					COMMON_CONFIG.RETRY.ATTEMPTS,
+					COMMON_CONFIG.RETRY.DELAY
+				);
 
-  return { standings, loading, error };
+				localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ timestamp: Date.now(), data })
+        );
+			} catch (err) {
+				console.error("Failed to fetch driver standings:", err);
+				setError(err instanceof Error ? err : new Error("Unknown error"));
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchStandings();
+	}, [year]);
+
+	return { standings, loading, error };
 };

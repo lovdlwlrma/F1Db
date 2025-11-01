@@ -280,7 +280,7 @@ export default function TyreStintsChart({
   };
 
   return (
-    <div className="w-full" style={{ height }}>
+    <div className="bg-gray-900 rounded-2xl p-4 shadow-2xl border border-gray-700 w-full" style={{ height }}>
       <Bar data={chartData} options={options} />
     </div>
   );

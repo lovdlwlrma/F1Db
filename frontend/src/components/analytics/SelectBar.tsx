@@ -28,7 +28,7 @@ const SelectBar: React.FC<Props> = ({
   const selectItemClass = "hover:bg-gray-700 px-2 py-1 rounded";
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 mb-4">
+    <div className="flex flex-wrap justify-center gap-4">
       {/* Year */}
       <Select
         value={year.toString()}

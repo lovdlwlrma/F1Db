@@ -62,7 +62,7 @@ const AnalyticsLayout: React.FC<AnalyticsLayoutProps> = ({
   }
 
   return (
-    <div className="flex flex-col min-h-screen p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex flex-col p-8">
       <SelectBar
         year={year}
         setYear={setYear}
@@ -77,7 +77,7 @@ const AnalyticsLayout: React.FC<AnalyticsLayoutProps> = ({
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <div className="flex flex-col gap-8 p-4">
+        <div className="flex flex-col gap-4 p-4">
           <RaceStatisticsTable
             drivers={drivers}
             results={results}

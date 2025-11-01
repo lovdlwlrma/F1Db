@@ -76,7 +76,7 @@ const TelemetryLayout: React.FC<TelemetryLayoutProps> = ({
   }
 
   return (
-    <div className="p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex flex-col p-8">
       <SelectBar
         year={year}
         setYear={setYear}

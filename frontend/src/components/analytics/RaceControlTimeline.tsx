@@ -111,7 +111,7 @@ const RaceControlTimeline: React.FC<RaceControlTimelineProps> = ({
   }
 
   return (
-    <div className="bg-gray-900 rounded-2xl border border-gray-800 p-6 relative">
+    <div className="bg-gray-900 rounded-2xl p-6 shadow-2xl border border-gray-700 relative">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <div className="bg-red-500 p-3 rounded-xl">

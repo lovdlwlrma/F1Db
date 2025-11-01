@@ -46,7 +46,7 @@ export const ScheduleLayout: React.FC<ScheduleLayoutProps> = ({
   }
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black p-6">
       {/* 模式切換按鈕 */}
       <div className="mb-6 flex gap-3">
         <button

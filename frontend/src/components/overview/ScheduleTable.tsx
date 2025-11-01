@@ -57,7 +57,7 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ nextRace, loading }) => {
     .filter((s) => s.startDate);
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-md rounded-lg p-6 h-full shadow-lg">
+    <div className="bg-gray-900 rounded-2xl p-4 shadow-2xl border border-gray-700 h-full">
       <div
         className="grid gap-3 h-full"
         style={{ gridTemplateRows: `repeat(${sessions.length}, 1fr)` }}
