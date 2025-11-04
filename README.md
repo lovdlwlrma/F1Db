@@ -1,4 +1,4 @@
-# F1Db - Formula 1 Dashboard Application
+# F1DB - Formula 1 Dashboard Application
 
 F1Db is a full-stack web application for managing and visualizing Formula 1 data with a React frontend and Go backend API service.
 
@@ -110,37 +110,9 @@ docker-compose up -d --build
 ## Accessing the Application
 Once the application is running, you can access it via:
 
-### Option 1: Using localhost (Default)
-
 ```
 Frontend:       http://localhost/
 Backend API:    http://localhost:8080/
-```
-
-### Option 2: Using Custom Domain (Recommended)
-Edit the /etc/hosts file to set up a custom domain:
-
-```bash
-# macOS / Linux
-sudo nano /etc/hosts
-
-# Windows
-# Run Notepad as Administrator and open C:\Windows\System32\drivers\etc\hosts
-```
-
-Add the following entries:
-
-```bash
-# example
-127.0.0.1   dashboard.f1db.io
-127.0.0.1   api.dashboard.f1db.io
-```
-
-After saving, you can access:
-
-```
-Frontend:      http://dashboard.f1db.io/
-Backend API:   http://api.dashboard.f1db.io:8080/
 ```
 
 ## Project Structure
