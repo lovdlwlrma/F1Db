@@ -4,7 +4,9 @@ import { useDriverStandings } from "@/hooks/useStandings";
 
 export const StandingsPage: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  const { standings, loading, error } = useDriverStandings({ year: currentYear });
+  const { standings, loading, error } = useDriverStandings({
+    year: currentYear,
+  });
 
   const seasonStandings = standings[0];
 

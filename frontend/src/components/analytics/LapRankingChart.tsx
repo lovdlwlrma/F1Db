@@ -198,7 +198,10 @@ export default function LapRankingChart({
   }, [result, driverMap]);
 
   return (
-    <div className="w-full bg-gray-900 rounded-2xl p-4 shadow-2xl border border-gray-700" style={{ height }}>
+    <div
+      className="w-full bg-gray-900 rounded-2xl p-4 shadow-2xl border border-gray-700"
+      style={{ height }}
+    >
       <Line
         data={chartData}
         options={{

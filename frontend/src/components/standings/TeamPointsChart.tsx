@@ -67,7 +67,7 @@ export const TeamPointsChart: React.FC<TeamPointsChartProps> = ({ data }) => {
         Constructor Standings Trend
       </h2>
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={chartData} margin={{ top: 10, left: -15, right: 15}}>
+        <LineChart data={chartData} margin={{ top: 10, left: -15, right: 15 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
           <XAxis
             dataKey="race"
@@ -77,10 +77,7 @@ export const TeamPointsChart: React.FC<TeamPointsChartProps> = ({ data }) => {
             height={50}
             tick={{ fontSize: 12, fill: "#9CA3AF" }}
           />
-          <YAxis 
-            stroke="#9CA3AF"
-            tick={{ fontSize: 12, fill: "#9CA3AF" }}
-          />
+          <YAxis stroke="#9CA3AF" tick={{ fontSize: 12, fill: "#9CA3AF" }} />
           <Tooltip
             content={({ payload, label }) => {
               if (!payload || payload.length === 0) return null;
