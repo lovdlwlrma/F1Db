@@ -13,7 +13,7 @@ const CACHE_EXPIRY_HOURS = 12;
 
 export const useDriverStandings = ({ year }: UseDriverStandingsProps) => {
   const [standings, setStandings] = useState<SeasonStanding[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {

@@ -16,15 +16,6 @@ interface TeamPointsChartProps {
 }
 
 export const TeamPointsChart: React.FC<TeamPointsChartProps> = ({ data }) => {
-  if (!data || !data.locations || !data.driver_standings) {
-    return (
-      <div className="bg-gray-800/50 backdrop-blur rounded-2xl p-6 shadow-2xl border border-gray-700">
-        <div className="text-center text-gray-400 py-20">
-          No Data to Display
-        </div>
-      </div>
-    );
-  }
 
   const teamColours: Record<string, string> = {};
   data.driver_standings.forEach((driver) => {
