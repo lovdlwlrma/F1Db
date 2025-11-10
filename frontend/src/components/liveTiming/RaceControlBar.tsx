@@ -81,7 +81,7 @@ export const RaceControlBar: React.FC<RaceControlBarProps> = ({
                   <span className="whitespace-nowrap">{msg.message}</span>
 
                   {/* 圈數資訊 */}
-                  {msg.lap && (
+                  {msg.lap > 0 && (
                     <span className="text-gray-400 ml-1 text-[11px] font-mono">
                       Lap {msg.lap}
                     </span>

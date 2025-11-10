@@ -48,9 +48,9 @@ export const SectorCell = ({
   const isEmpty = !sector?.value;
 
   let sectorColorClass = "text-gray-300";
-  if (sector?.overallFastest) sectorColorClass = "text-purple-400 font-bold";
+  if (sector?.overallFastest) sectorColorClass = "text-gray-300 font-bold";
   else if (sector?.personalFastest)
-    sectorColorClass = "text-green-400 font-bold";
+    sectorColorClass = "text-gray-300 font-bold";
   else if (isEmpty) sectorColorClass = "text-white/40";
 
   let bestColorClass = "text-green-400";

@@ -21,6 +21,8 @@ export interface F1LiveTimingServiceOptions {
   enableSnapshot?: boolean;
 }
 
+const LIVETITMING_API = "/livetiming/api/realtime";
+
 /**
  * F1 Live Timing 服務
  * 這是整合所有層級的統一服務
@@ -36,7 +38,7 @@ export class F1LiveTimingService {
 
   constructor(options: F1LiveTimingServiceOptions = {}) {
     const {
-      url = "/livetiming/api/realtime",
+      url = LIVETITMING_API,
       debug = true,
       enableSnapshot = false,
     } = options;

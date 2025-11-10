@@ -14,7 +14,6 @@ export const LiveTimingTable: React.FC<LiveTimingTableProps> = ({
     .filter((n) => n > 0);
   const fastestLap =
     allBestLaps.length > 0 ? Math.min(...allBestLaps) : undefined;
-
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-max text-xs table-fixed border-separate border-spacing-0">

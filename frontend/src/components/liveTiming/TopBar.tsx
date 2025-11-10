@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 
 interface TopbarProps {
-	session: SessionData;
-	weather: WeatherData;
+	session?: SessionData;
+	weather?: WeatherData;
 	connectionStatus: string;
 	updateCount: number;
 }
@@ -33,6 +33,29 @@ export const Topbar: React.FC<TopbarProps> = ({
 	connectionStatus,
 	updateCount,
 }) => {
+	// safe defaults so the component won't crash if data hasn't arrived yet
+	const s =
+		session ??
+		({
+			name: "",
+			type: "",
+			trackStatus: "",
+			lapsCompleted: 0,
+			totalLaps: 0,
+		} as SessionData);
+
+	const w =
+		weather ??
+		({
+			airTemp: 0,
+			humidity: 0,
+			pressure: 0,
+			rainfall: 0,
+			trackTemp: 0,
+			windDirection: 0,
+			windSpeed: 0,
+		} as WeatherData);
+
 	return (
 		<div className="bg-gray-900 border-b border-gray-700 px-4 h-[50px] flex items-center">
 			<div className="flex items-center justify-between w-full">
@@ -40,17 +63,17 @@ export const Topbar: React.FC<TopbarProps> = ({
 				<div className="flex items-center gap-3 min-w-0 flex-shrink-0">
 					<div className="flex items-center gap-4 text-sm whitespace-nowrap">
 						<span className="text-white text-l font-semibold truncate">
-							{session.name} - {session.type}
+							{s.name} - {s.type}
 						</span>
 						<span
 							className={`px-2 py-0.5 rounded text-xs font-bold ${
-								statusColorMap[session.trackStatus] || statusColorMap.Default
+								statusColorMap[s.trackStatus] || statusColorMap.Default
 							}`}
 						>
-							{session.trackStatus}
+							{s.trackStatus}
 						</span>
 						<span className="text-white font-bold">
-							Lap {session.lapsCompleted} / {session.totalLaps}
+							Lap {s.lapsCompleted} / {s.totalLaps}
 						</span>
 					</div>
 				</div>
@@ -59,39 +82,31 @@ export const Topbar: React.FC<TopbarProps> = ({
 				<div className="flex items-center gap-4 text-sm flex-shrink min-w-0 justify-center">
 					<div className="flex items-center gap-1.5">
 						<Thermometer className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
-						<span className="text-white font-medium">{weather.airTemp}°C</span>
+						<span className="text-white font-medium">{w.airTemp}°C</span>
 					</div>
 					<div className="flex items-center gap-1.5">
 						<Activity className="w-3.5 h-3.5 text-red-400 flex-shrink-0" />
-						<span className="text-white font-medium">
-							{weather.trackTemp}°C
-						</span>
+						<span className="text-white font-medium">{w.trackTemp}°C</span>
 					</div>
 					<div className="flex items-center gap-1.5">
 						<Droplets className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
-						<span className="text-white font-medium">{weather.humidity}%</span>
+						<span className="text-white font-medium">{w.humidity}%</span>
 					</div>
 					<div className="flex items-center gap-1.5">
 						<Wind className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-						<span className="text-white font-medium">
-							{weather.windSpeed}m/s
-						</span>
+						<span className="text-white font-medium">{w.windSpeed}m/s</span>
 					</div>
 					<div className="flex items-center gap-1.5">
 						<Compass className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
-						<span className="text-white font-medium">
-							{weather.windDirection}°
-						</span>
+						<span className="text-white font-medium">{w.windDirection}°</span>
 					</div>
 					<div className="flex items-center gap-1.5">
 						<CloudRain className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
-						<span className="text-white font-medium">{weather.rainfall}mm</span>
+						<span className="text-white font-medium">{w.rainfall}mm</span>
 					</div>
 					<div className="flex items-center gap-1.5">
 						<Gauge className="w-3.5 h-3.5 text-yellow-400 flex-shrink-0" />
-						<span className="text-white font-medium">
-							{weather.pressure}hPa
-						</span>
+						<span className="text-white font-medium">{w.pressure}hPa</span>
 					</div>
 				</div>
 

@@ -22,6 +22,12 @@ export default defineConfig({
 				rewrite: (path) => path.replace(/^\/livetiming/, ""),
 				secure: false,
 			},
+			"/localsse": {
+				target: "http://localhost:3031/",
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/localsse/, ""),
+				secure: false,
+			},
 		},
 	},
 	resolve: {

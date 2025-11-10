@@ -31,6 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     { icon: <BarChart3 size={28} />, label: "Analytics" },
     { icon: <Trophy size={28} />, label: "Standings" },
     { icon: <Calendar size={28} />, label: "Schedule" },
+    { icon: <Calendar size={28} />, label: "Test" },
   ];
 
   return (
