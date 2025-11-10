@@ -7,7 +7,6 @@ interface PositionBoxPlotProps {
 }
 
 export const PositionBoxPlot: React.FC<PositionBoxPlotProps> = ({ data }) => {
-  
   const boxPlotData = data.driver_standings
     .map((driver) => {
       const validPos = driver.positions.filter((p) => p > 0); // exclude DNF (-1) or 0

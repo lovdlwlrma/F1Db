@@ -37,10 +37,7 @@ export const RaceControlBar: React.FC<RaceControlBarProps> = ({
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        <div
-          className="flex items-center px-2"
-          style={{ gap: `${itemGap}px` }}
-        >
+        <div className="flex items-center px-2" style={{ gap: `${itemGap}px` }}>
           {duplicatedMessages.map((msg, idx) => {
             const globalIndex = getGlobalIndex(idx);
             const isLatest = globalIndex === messages.length;

@@ -18,7 +18,6 @@ interface DriverPointsChartProps {
 export const DriverPointsChart: React.FC<DriverPointsChartProps> = ({
   data,
 }) => {
-  
   const chartData: any[] = [];
 
   // 用 Map 先分組

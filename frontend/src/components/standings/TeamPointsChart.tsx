@@ -16,7 +16,6 @@ interface TeamPointsChartProps {
 }
 
 export const TeamPointsChart: React.FC<TeamPointsChartProps> = ({ data }) => {
-
   const teamColours: Record<string, string> = {};
   data.driver_standings.forEach((driver) => {
     teamColours[driver.team_name] = driver.team_colour;
